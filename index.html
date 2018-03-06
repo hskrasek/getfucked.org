@@ -1,0 +1,1574 @@
+<!--
+@aaronmclellan
+-->
+<!-- load libraries and frameworks -->
+<link rel="shortcut icon" type="image/png" href="middle_fingers/sketch_black_128x128.png" />
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-progressive-image@2.4.4/dist/vue-progressive-image.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
+<meta name="theme-color" content="#000000">
+<link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, user-scalable=0">
+<meta name="Description" content="click to get random gifs. save your favs for later, download or copy a url to share. everything will be saved when you come back">
+<meta name="Keywords" content="getfucked, getfucked.org, get fucked gifs, funny">
+<meta name="Author" content="ron">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no,  user-scalable=0">
+  <meta name="Description" content="click to get random gifs. star your favs for later, download or copy a url to share. everything will be saved when you come back">
+  <meta name="Keywords" content="getfucked, getfucked.org, get fucked gifs, funny">
+  <meta name="Author" content="ron">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43308018-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-43308018-5');
+  </script>
+  <title>fucked</title>
+</head>
+<div class="main_content col-md-5 offset-md-3" id="data">
+  <!-- centered container -->
+  <!-- <div class=""> -->
+    <!-- <div class="row"> -->
+      <!-- <div class="col"> -->
+        <!-- <div class="row"> -->
+          <!-- <div class="col"> -->
+            <center>
+              <hr>
+              <!-- profile dropdown button-->
+              <div class="dropdown dropdown-pull-right profile_button" id="profile_dropdown">
+                <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" title="favs" data-content="see your favs here">
+                <i class="fas fa-user-circle" style="font-size: 45px;"></i><span v-if="fav_gifs.length>0" class="badge badge-pill badge-dark">{{fav_gifs.length}}</span>
+                </button>
+              <!-- body of dropdown -->
+                  <div class="dropdown-menu dropdown-menu-right" style="width: 400% !important;" aria-labelledby="dropdownMenuButton">
+                    <div class="col fav mostly-customized-scrollbar">
+                      <br>
+                      <!-- <div class="form-row align-items-center"> -->
+                      <!-- <div class="col"> -->
+                        <div class="row">
+                          <div class="col-4">
+                            <button type="button" id="submitGif" v-on:click="submitGif" class="rons_button btn" role="button" >submit gif</button>
+                          </div>
+                          <div class="col-8">
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">&nbsp;<i class="fas fa-female"></i>&nbsp;</div>
+                            </div>
+                            <input type="text" class="form-control" v-model="profileName" placeholder="name">
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- </div> -->
+                      <!-- </div> -->
+                      <hr>
+                      <center><h4>favs</h4><center>
+                      <hr>
+                      <div class="container fav_gifs">
+                        <!-- <div class="row"> -->
+                          <div v-for="fav in fav_gifs" v-cloak>
+                            <p>{{fav.description}}</p>
+                            <img :src="fav.url" :id="fav" width=100% v-cloak>
+                            <input type="text" :value="fav.url" :id="fav.id" style="position: absolute;left: -9999px;">
+                            <span class="float-right">
+                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavDownload'" v-on:click="saveGif(fav.id+'inFavDownload')" data-toggle="popover" data-placement="bottom" title="downloading...">
+                                <a :download="fav.description" :href="fav.local_url" title="ImageName">
+                                    <i class="far fa-save" style="font-size:20px"></i>
+                                </a>
+                              </button>
+                              |
+                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavCopy'" v-on:click="copyUrl(fav.id,fav.id+'inFavCopy')" data-toggle="popover"  data-placement="bottom" title="copied" :data-content="fav.url">
+                                <i class="far fa-copy" style="font-size:20px"></i>
+                              </button>
+                              |
+                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavFav'" v-on:click="favGif(fav,fav.id+'inFavFav')">
+                                <i class="fas fa-star" style="font-size:20px"></i>
+                              </button>
+                            </span>
+                            <br>
+                            <br>
+                            <hr>
+                          </div>
+                        <!-- </div> -->
+                      </div>
+                    </div>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col">
+                          <button type="button" v-on:click="closeFavs()" class="btn rons_button btn-lg btn-block" style="font-size: 25px;" data-dismiss="modal">close</button>
+                        </div>
+                      </div>
+                    </div>
+                      <!-- </div> -->
+                    </div>
+                  <!-- </div> -->
+                <!-- </div> -->
+              </div>
+              <div class="container">
+                <!-- here, adding the other fingers and shit -->
+                <h2>
+                  <!-- middle finger select -->
+                  <div class="row" style="padding:0; margin:0;">
+                    <!-- left side -->
+                    <div class="col-3">
+                      <div class="dropdown rons-menu">
+                        <button type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
+                          <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                        </button>
+                        <div class="rons-menu">
+                          <div class="dropdown-menu">
+                            <div v-for="finger in middle_fingers" v-cloak>
+                              <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
+                                <img :src="finger.path+'.png'" width="50%">
+                              </button>
+
+                            <!-- <button type="button" class="btn">
+                              <img src="middle_fingers/simple_black_128x128.png" width="50%">
+                            </button>
+                            <button type="button" class="btn">
+                              <img src="middle_fingers/zombie_128x128.png" width="50%">
+                            </button> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="profileName" class="col-6" style="padding:0; margin:0;">
+                    get fucked, {{profileName}}
+                  </div>
+                  <div v-else class="col-6" style="padding:0; margin:0;">
+                    get fucked
+                  </div>
+                  <div class="col-3">
+                    <div class="dropdown rons-menu">
+                      <button type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                      </button>
+                      <div class="rons-menu">
+                        <div class="dropdown-menu">
+                          <div v-for="finger in middle_fingers" v-cloak>
+                            <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
+                              <img :src="finger.path+'.png'" width="50%">
+                            </button>
+
+                          <!-- <button type="button" class="btn">
+                            <img src="middle_fingers/simple_black_128x128.png" width="50%">
+                          </button>
+                          <button type="button" class="btn">
+                            <img src="middle_fingers/zombie_128x128.png" width="50%">
+                          </button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </h2>
+                <div v-cloak>total gifs: {{fucked_gifs.length}} | your gifs: {{count}}</div>
+
+              </div>
+              <!-- <hr> -->
+              <hr>
+              <transition name="fade">
+              <div v-if="all_gifs_loaded" ></div>
+              <div v-else-if="loaded_gifs.length>35" class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">loading gifs...{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
+              </div>
+              <div v-else class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
+              </div>
+              </transition>
+              <!-- <img src="http://i.imgur.com/YyDq4OX.gif" alt = "" :id="fuck" width=100%> -->
+            </center>
+            <!-- insults -->
+            <div v-cloak>
+            <div class="col hmm mostly-customized-scrollbar" id="hmm">
+              <div v-for="fuck in fucks_list" v-cloak>
+                <br>
+                <img :src="fuck.url" :id="fuck" width=100% v-cloak>
+                <input type="text" :value="fuck.url" :id="fuck.id" style="position: absolute;left: -9999px;">
+                <span class="float-right">
+                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+2" v-on:click="saveGif(fuck.id+2)" data-toggle="popover" data-placement="bottom" title="downloading...">
+                    <a :download="fuck.description" :href="fuck.local_url" title="ImageName">
+                        <i class="far fa-save" style="font-size:20px"></i>
+                    </a>
+                  </button>
+                  |
+                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+1" v-on:click="copyUrl(fuck.id,fuck.id+1)" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
+                    <i class="far fa-copy" style="font-size:20px"></i>
+                  </button>
+                  |
+                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+'fav'" v-on:click="favGif(fuck,fuck.id+'fav')" data-toggle="popover" data-placement="bottom" title="fav'd" :data-content="fuck.description">
+                    <i class="far fa-star" style="font-size:20px"></i>
+                  </button>
+                </span>
+              </div>
+
+
+              <button  id="showGifs" @click="show = !show" style="position: absolute;left: -9999px;">
+                <!-- Toggle render -->
+              </button>
+              <p v-if="fucks_list.length == 0">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </p>
+            </div>
+          </div>
+            <hr>
+            <div class="row">
+              <div class="col-8">
+                <button v-if="!current_middle_finger" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img src="middle_fingers/zombie_128x128.png" width="8%"/></button>
+                <button v-else-if="fucks_list.length==fucked_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back" disabled>&nbsp;<img :src="current_middle_finger+'.gif'" width="8%"/>you got em all<img :src="current_middle_finger+'.gif'" width="8%"/></button>
+                <button v-else-if="all_gifs_loaded && fucks_list.length!=fucked_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
+                <button v-else-if="current_count>=loaded_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back" disabled>&nbsp;<img :src="current_middle_finger+'.gif'" width="8%"/>loading...<img :src="current_middle_finger+'.gif'" width="8%"/></button>
+                <button v-else type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
+              </div>
+              <!-- <div class="col-8">
+              <button type="button" id="insultMePls" class="btn-dark btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later,download or copy a url to share" disabled><img src="loading1.gif" width="10%"/></button>
+              </div> -->
+              <!--
+              *****************
+              *****************
+              *  clear dropup  *
+              *****************
+              *****************
+             -->
+              <div class="col dropup">
+                <button type="button" class="rons_button btn btn-lg btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   clear
+                 </button>
+                <div class="dropdown-menu dropdown-menu-right" style="width: 250px !important;">
+                  <hr>
+                  <div class="container" style="font-size: 35px;">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row" style="margin: 4%;">
+                          <div class="pretty p-switch p-fill">
+                            <input type="checkbox" id="clear_insults" />
+                            <div class="state">
+                              <label>gifs</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin: 4%;">
+                          <div class="pretty p-switch p-fill">
+                            <input type="checkbox" id="clear_favs" />
+                            <div class="state">
+                              <label>favs</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin: 4%;">
+                          <div class="pretty p-switch p-fill">
+                            <input type="checkbox" id="clear_profile" />
+                            <div class="state">
+                              <label>profile</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row" style="margin-bottom: 5%;">
+                          <div class="pretty p-switch p-fill">
+                            <input type="checkbox" id="clear_level" />
+                            <div class="state">
+                              <label>clicks</label>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <hr>
+                    <div class="row">
+                      <div class="col" style="margin-bottom: 5%;">
+                        <button type="button" class="btn rons_button btn-lg btn-block" v-on:click="clear_specific" id="clear_selected" style="font-size: 25px;" data-dismiss="modal" disabled>clear selected</button>
+                      </div>
+                      <div class="col" style="margin-bottom: 5%;">
+                        <button v-if="!all_gifs_loaded" type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal" disabled>clear all</button>
+                        <button v-else type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal">clear all</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button type="button" class="btn rons_button btn-lg btn-block" style="font-size: 25px;" data-dismiss="modal">close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- end clear dropup -->
+            </div><!-- end get fucked and clear buttons -->
+          </div><!-- end main content -->
+<!-- javascript -->
+<script>
+// import Vue from 'vue'
+// import VueProgressiveImage from 'vue-progressive-image'
+// Vue.use(VueProgressiveImage)
+//once doc is ready, check all favs in insult_list
+$(document).ready(function() {
+  for (i = 0; i < fucks.fav_gifs.length; i++) {
+    var num=fucks.fav_gifs[i].id+"fav"
+    var testies="#"+num
+    $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+  }
+  // console.log("setting popover")
+  // if (!localStorage.profile_tutorial) {
+  //   fucks.showProfilePopover()
+  // }
+//   $("#dropdownMenuButton").popover({
+//         html : true,
+// }).data('bs.show.bs.popover').tip().attr('id', 'rons_popover');
+
+// $('#dropdownMenuButton').on('shown.bs.popover', function() {
+//     // parseInt removes "px"
+//     console.log('dropdown popover has shown: '+(currentTop + 100) + 'px')
+//     var currentTop = parseInt($(this).css('top'));
+//     var currentLeft = parseInt($(this).css('left'));
+//
+//     $(this).css({
+//         top: '45px',
+//         left: '-18px'
+//     });
+// });
+  });
+  // ------------------------
+  // vue defs
+  // ------------------------
+  //   - one item from each col makes up an insults
+  //   - methods are functions dealing with this dataset
+  //     - getInsult()
+  //       - returns a random word from each col (1,2,3) creating an insult and populating the textarea.
+  //       - will not allow duplicates of an insult
+  //     - getLog()
+  //       - logs values to the console
+  //     - clear()
+  //       -clears insult list --having trouble clearing the count...reading it back from local storage specifically
+  var fucks = new Vue({
+    el: '#data',
+    data: {
+      count: 0,
+      profile_tutorial: false,
+      current_count: 0,
+      show: false,
+      gifs_left: 0,
+      times_completed: 0,
+      insult: '',
+      profileName: '',
+      profileBio: '',
+      fucks_list: [],
+      badge_list: [],
+      eligible_gifs: [],
+      current_eligible_gifs: [],
+      all_gifs_loaded: false,
+      loaded_gifs: [],
+      next_progress_count: 0,
+      level_count: 0,
+      fav_gifs: [],
+      current_middle_finger: '',
+      middle_fingers: [
+        {id:1, path: "middle_fingers/zombie_128x128"},
+        {id:2, path: "middle_fingers/sketch_black_128x128"},
+        {id:3, path: "middle_fingers/simple_outline_128x128"},
+        {id:4, path: "middle_fingers/simple_black_128x128"},
+      ],
+      progress: [{
+          int: 10,
+          badge: 'beginner',
+          icon: 'fas fa-id-badge'
+        },
+        {
+          int: 50,
+          badge: 'child',
+          icon: 'fab fa-grav'
+        },
+        {
+          int: 150,
+          badge: 'okay...',
+          icon: 'fas fa-moon'
+        },
+        {
+          int: 275,
+          badge: 'button clicker',
+          icon: 'fas fa-mouse-pointer'
+        },
+        {
+          int: 500,
+          badge: 'still clicking?',
+          icon: 'fas fa-certificate'
+        },
+        {
+          int: 1000,
+          badge: 'really?',
+          icon: 'fas fa-bowling-ball'
+        },
+        {
+          int: 1500,
+          badge: 'teen',
+          icon: 'fas fa-child'
+        },
+        {
+          int: 2000,
+          badge: 'master idiot',
+          icon: 'fas fa-graduation-cap'
+        }
+      ],
+      fucked_gifs: [
+        { id: 1, url: 'http://i.imgur.com/rGVUFGh.gif', description: 'disney go fuck yourself', local_url: 'gifs/1.gif' },
+{ id: 2, url: 'http://i.imgur.com/cBn1gZB.gif', description: 'crasy arm man go fuck yourself', local_url: 'gifs/2.gif' },
+{ id: 3, url: 'http://i.imgur.com/oBC7bLr.gif', description: 'gamecube fuck yourself', local_url: 'gifs/3.gif' },
+{ id: 4, url: 'http://i.imgur.com/L7Hkee6.gif', description: 'irredeemable fuckwit', local_url: 'gifs/4.gif' },
+{ id: 5, url: 'http://i.imgur.com/ZdGQWTH.gif', description: 'almost gave a fuck', local_url: 'gifs/5.gif' },
+{ id: 6, url: 'http://i.imgur.com/JOmfUor.gif', description: 'seal almost gave a fuck', local_url: 'gifs/6.gif' },
+{ id: 7, url: 'http://i.imgur.com/vRMR4pG.gif', description: 'middle finger greeting card', local_url: 'gifs/7.gif' },
+{ id: 8, url: 'http://i.imgur.com/SvykPoC.gif', description: 'middle finger thru the face', local_url: 'gifs/8.gif' },
+{ id: 9, url: 'http://i.imgur.com/G8KWYcZ.gif', description: 'scool bus bird', local_url: 'gifs/9.gif' },
+{ id: 10, url: 'http://i.imgur.com/0IRT9E2.gif', description: 'mr bean flippin it', local_url: 'gifs/10.gif' },
+{ id: 11, url: 'http://i.imgur.com/7utOqMN.gif', description: 'homer no fucks', local_url: 'gifs/11.gif' },
+{ id: 12, url: 'http://i.imgur.com/H5gTBvE.gif', description: 'aquaman fuck you', local_url: 'gifs/12.gif' },
+{ id: 13, url: 'http://i.imgur.com/mgVwGTD.gif', description: 'fuck you!', local_url: 'gifs/13.gif' },
+{ id: 14, url: 'http://i.imgur.com/TSHU3fE.gif', description: 'infinite birds', local_url: 'gifs/14.gif' },
+{ id: 15, url: 'http://i.imgur.com/Vbd00Ry.gif', description: 'disney go fuck yourself with a cactus', local_url: 'gifs/15.gif' },
+{ id: 16, url: 'http://i.imgur.com/oo7gwZJ.gif', description: 'departed maybe go fuck yourself', local_url: 'gifs/16.gif' },
+{ id: 17, url: 'http://i.imgur.com/7OEpoxD.gif', description: 'ninja flip', local_url: 'gifs/17.gif' },
+{ id: 18, url: 'http://i.imgur.com/IS8g6YD.gif', description: 'dinklage fuck u', local_url: 'gifs/18.gif' },
+{ id: 19, url: 'http://i.imgur.com/YyDq4OX.gif', description: 'mr rogers flippin', local_url: 'gifs/19.gif' },
+{ id: 20, url: 'http://i.imgur.com/i2Wou.jpg', description: 'colin mochrie middle finger', local_url: 'gifs/20.gif' },
+{ id: 21, url: 'http://i.imgur.com/ElURxUe.jpg', description: 'misfits fuck u', local_url: 'gifs/21.gif' },
+{ id: 22, url: 'http://i.imgur.com/2I0afpV.jpg', description: 'fingered in a wheelchair :(', local_url: 'gifs/22.gif' },
+{ id: 23, url: 'http://i.imgur.com/8P72l5F.jpg', description: 'dobby (rip) poof fuck you', local_url: 'gifs/23.gif' },
+{ id: 24, url: 'http://i.imgur.com/z9RQ3Ik.gif', description: 'sneaky dinner kid middle finger', local_url: 'gifs/24.gif' },
+{ id: 25, url: 'http://i.imgur.com/YqmYoka.gif', description: 'grannies flippin that bird', local_url: 'gifs/25.gif' },
+{ id: 26, url: 'http://i.imgur.com/c4CZuoC.gif', description: 'queen double bird', local_url: 'gifs/26.gif' },
+{ id: 27, url: 'http://i.imgur.com/NertoPx.gif', description: 'surprise quad flip', local_url: 'gifs/27.gif' },
+{ id: 28, url: 'http://i.imgur.com/27yYLyv.gif', description: 'that turtle franklin fuck you', local_url: 'gifs/28.gif' },
+{ id: 29, url: 'http://i.imgur.com/2UMXDvF.gif', description: 'woody fuck u', local_url: 'gifs/29.gif' },
+{ id: 30, url: 'http://i.imgur.com/GR1pElY.gif', description: 'scrolling go fuck yourself', local_url: 'gifs/30.gif' },
+{ id: 31, url: 'http://i.imgur.com/Vk9HYNz.gif', description: 'bouncy fuck you', local_url: 'gifs/31.gif' },
+{ id: 32, url: 'http://i.imgur.com/GCTedks.gif', description: 'dunst double bird', local_url: 'gifs/32.gif' },
+{ id: 33, url: 'http://i.imgur.com/vKS6Gac.gif', description: 'ryan stiles finds a fuck', local_url: 'gifs/33.gif' },
+{ id: 34, url: 'http://i.imgur.com/a5zSwVa.gif', description: 'jack bird', local_url: 'gifs/34.gif' },
+{ id: 35, url: 'http://i.imgur.com/zOcyC0u.jpg', description: 'powers pumpin bird', local_url: 'gifs/35.gif' },
+{ id: 36, url: 'http://i.imgur.com/Yv9NV.gif', description: 'boba fett wind up bird', local_url: 'gifs/36.gif' },
+{ id: 37, url: 'http://i.imgur.com/fMth417.gif', description: 'chevy finger', local_url: 'gifs/37.gif' },
+{ id: 38, url: 'http://i.imgur.com/Jb6n1Ua.gif', description: 'queen quad flip', local_url: 'gifs/38.gif' },
+{ id: 39, url: 'http://i.imgur.com/GBdLcr3.gif', description: 'not quite hollywod crazy fingers?', local_url: 'gifs/39.gif' },
+{ id: 40, url: 'http://i.imgur.com/Vwrp0J4.gif', description: 'amy poehler double finger', local_url: 'gifs/40.gif' },
+{ id: 41, url: 'http://i.imgur.com/20Cl6r9.gif', description: 'em 8 mile no fucks', local_url: 'gifs/41.gif' },
+{ id: 42, url: 'http://i.imgur.com/QT2k4Ed.gif', description: 'kristin bell ft. middle finger', local_url: 'gifs/42.gif' },
+{ id: 43, url: 'http://i.imgur.com/NWrIhea.gif', description: 'david brent finger', local_url: 'gifs/43.gif' },
+{ id: 44, url: 'http://i.imgur.com/VKx9XE7.gif', description: 'sudeikis show', local_url: 'gifs/44.gif' },
+{ id: 45, url: 'http://i.imgur.com/Qt7Qk0s.gif', description: 'gillian jacobs up urs', local_url: 'gifs/45.gif' },
+{ id: 46, url: 'http://i.imgur.com/78LM3vD.gif', description: 'girl car window flip', local_url: 'gifs/46.gif' },
+{ id: 47, url: 'http://i.imgur.com/7EQS5Og.gif', description: 'walter white bird', local_url: 'gifs/47.gif' },
+{ id: 48, url: 'http://i.imgur.com/jP3Y9sY.gif', description: 'stewart double up', local_url: 'gifs/48.gif' },
+{ id: 49, url: 'http://i.imgur.com/iXfvvAZ.gif', description: 'devito flip', local_url: 'gifs/49.gif' },
+{ id: 50, url: 'http://i.imgur.com/Wdn9vdI.gif', description: 'child stumbles then surprise flips with conviction', local_url: 'gifs/50.gif' },
+{ id: 51, url: 'http://i.imgur.com/czy4iAA.gif', description: 'galifianakis middle finger', local_url: 'gifs/51.gif' },
+{ id: 52, url: 'http://i.imgur.com/qqvASSz.gif', description: 'spidey', local_url: 'gifs/52.gif' },
+{ id: 53, url: 'http://i.imgur.com/8IYFCj8.gif', description: 'felicia day u can go fuck urself', local_url: 'gifs/53.gif' },
+{ id: 54, url: 'http://i.imgur.com/LA1ARzg.gif', description: 'batman double flipper', local_url: 'gifs/54.gif' },
+{ id: 55, url: 'http://i.imgur.com/JRaxAKI.gif', description: 'freeman camera rush', local_url: 'gifs/55.gif' },
+{ id: 56, url: 'http://i.imgur.com/yanDuG4.gif', description: 'stiller finger', local_url: 'gifs/56.gif' },
+{ id: 57, url: 'http://i.imgur.com/0bVma53.gif', description: 'team up 2 say fuck you!', local_url: 'gifs/57.gif' },
+{ id: 58, url: 'http://i.imgur.com/rHrvoqG.gif', description: 'macgruber flip', local_url: 'gifs/58.gif' },
+{ id: 59, url: 'http://i.imgur.com/wxa6Qnq.gif', description: 'brain pls', local_url: 'gifs/59.gif' },
+{ id: 60, url: 'http://i.imgur.com/OPwcQkl.gif', description: 'asylum get fucked', local_url: 'gifs/60.gif' },
+{ id: 61, url: 'http://i.imgur.com/y8WwZHm.gif', description: 'burgundy fuck yourself', local_url: 'gifs/61.gif' },
+{ id: 62, url: 'http://i.imgur.com/hRSi2bN.gif', description: 'ja\'mie fuck public school bitches', local_url: 'gifs/62.gif' },
+{ id: 63, url: 'http://i.imgur.com/hcqWEOh.gif', description: 'colbert u can fuck yourself', local_url: 'gifs/63.gif' },
+{ id: 64, url: 'http://i.imgur.com/jdzkhwU.gif', description: '21st century fuck urself', local_url: 'gifs/64.gif' },
+{ id: 65, url: 'http://i.imgur.com/j9clEbk.gif', description: 'granny flips the bird', local_url: 'gifs/65.gif' },
+{ id: 66, url: 'http://i.imgur.com/FNalJLH.gif', description: 'bush back2back', local_url: 'gifs/66.gif' },
+{ id: 67, url: 'http://i.imgur.com/nHXgxtF.gif', description: 'doubtfire fuck u', local_url: 'gifs/67.gif' },
+{ id: 68, url: 'http://i.imgur.com/gf6Ce3S.gif', description: 'elsa fuck off', local_url: 'gifs/68.gif' },
+{ id: 69, url: 'http://i.imgur.com/Lu7SMVP.gif', description: 'kathy double bird', local_url: 'gifs/69.gif' },
+{ id: 70, url: 'http://i.imgur.com/pGY4fWA.gif', description: 'surprise bird', local_url: 'gifs/70.gif' },
+{ id: 71, url: 'http://i.imgur.com/RdMgi2M.gif', description: 'farley mechanical flip', local_url: 'gifs/71.gif' },
+{ id: 72, url: 'http://i.imgur.com/GK5sFYA.gif', description: 'buster has an accident', local_url: 'gifs/72.gif' },
+{ id: 73, url: 'http://i.imgur.com/XwcWiw6.gif', description: 'disney channel wand id middle finger', local_url: 'gifs/73.gif' },
+{ id: 74, url: 'http://i.imgur.com/iAiD12O.gif', description: 'radcliffe paints', local_url: 'gifs/74.gif' },
+{ id: 75, url: 'http://i.imgur.com/ZRxMPzy.gif', description: 'flight of the conchords rare triple bird', local_url: 'gifs/75.gif' },
+{ id: 76, url: 'http://i.imgur.com/gFiTl4N.gif', description: 'fuk u', local_url: 'gifs/76.gif' },
+{ id: 77, url: 'http://i.imgur.com/bMAaXYx.gif', description: 'welcome to the dollhouse fuck you', local_url: 'gifs/77.gif' },
+{ id: 78, url: 'http://i.imgur.com/Ojumk4x.gif', description: 'workaholics fuck u dude', local_url: 'gifs/78.gif' },
+{ id: 79, url: 'http://i.imgur.com/0EAEaRT.gif', description: 'adele double bird', local_url: 'gifs/79.gif' },
+{ id: 80, url: 'http://i.imgur.com/tyOshi6.gif', description: 'debra fuck you', local_url: 'gifs/80.gif' },
+{ id: 81, url: 'http://i.imgur.com/osO4ntp.gif', description: 'littlefinger fuck yourself', local_url: 'gifs/81.gif' },
+{ id: 82, url: 'http://i.imgur.com/IyAt21V.gif', description: 'shrek double bird', local_url: 'gifs/82.gif' },
+{ id: 83, url: 'http://i.imgur.com/wPWUxha.gif', description: 'kendrick flippin', local_url: 'gifs/83.gif' },
+{ id: 84, url: 'http://i.imgur.com/RHQfk9l.gif', description: 'tf2 double', local_url: 'gifs/84.gif' },
+{ id: 85, url: 'http://i.imgur.com/3taMGPY.gif', description: 'ringwald breakfast club flip', local_url: 'gifs/85.gif' },
+{ id: 86, url: 'http://i.imgur.com/5Y4HWeU.gif', description: 'lady gaga slight flip', local_url: 'gifs/86.gif' },
+{ id: 87, url: 'http://i.imgur.com/Nw30okY.gif', description: 'asap double', local_url: 'gifs/87.gif' },
+{ id: 88, url: 'http://i.imgur.com/6UWsQmz.gif', description: 'this guy looks like ray romano', local_url: 'gifs/88.gif' },
+{ id: 89, url: 'http://i.imgur.com/Up62vt4.gif', description: 'kunis fuk u', local_url: 'gifs/89.gif' },
+{ id: 90, url: 'http://i.imgur.com/T0vpgrv.gif', description: 'matt smith flipping the bird', local_url: 'gifs/90.gif' },
+{ id: 91, url: 'http://i.imgur.com/2KUfKCJ.gif', description: 'wild toe flip 10/10', local_url: 'gifs/91.gif' },
+{ id: 92, url: 'http://i.imgur.com/7Kqel9V.gif', description: 'bring it on middle', local_url: 'gifs/92.gif' },
+{ id: 93, url: 'http://i.imgur.com/4Hg038N.gif', description: 'the icon of a lo-fi song on soundcloud', local_url: 'gifs/93.gif' },
+{ id: 94, url: 'http://i.imgur.com/kwqgP7K.gif', description: 'cursed werewolf middle finger', local_url: 'gifs/94.gif' },
+{ id: 95, url: 'http://i.imgur.com/AHkgOsq.gif', description: 'pratt wind up bird', local_url: 'gifs/95.gif' },
+{ id: 96, url: 'http://i.imgur.com/0RRdVyC.gif', description: 'attack on titan or some shit?', local_url: 'gifs/96.gif' },
+{ id: 97, url: 'http://i.imgur.com/1F7JhaI.gif', description: 'mcavoy middle finger', local_url: 'gifs/97.gif' },
+{ id: 98, url: 'http://i.imgur.com/eNyIuiK.gif', description: 'conchords flippin', local_url: 'gifs/98.gif' },
+{ id: 99, url: 'http://i.imgur.com/P4C0vQV.gif', description: 'rebel found a fuck', local_url: 'gifs/99.gif' },
+{ id: 100, url: 'http://i.imgur.com/z1Gm6Ui.gif', description: 'hand flippin', local_url: 'gifs/100.gif' },
+{ id: 101, url: 'http://i.imgur.com/ZpZADCK.gif', description: 'rub it in', local_url: 'gifs/101.gif' },
+{ id: 102, url: 'http://i.imgur.com/Cu73ifj.gif', description: 'fuk everyone', local_url: 'gifs/102.gif' },
+{ id: 103, url: 'http://i.imgur.com/aqzNUJ5.gif', description: 'baby\'s first flip', local_url: 'gifs/103.gif' },
+{ id: 104, url: 'http://i.imgur.com/M6BZlpj.gif', description: 'donald glover (god) out of fucks', local_url: 'gifs/104.gif' },
+{ id: 105, url: 'http://i.imgur.com/tRKM2x2.gif', description: 'shaun get fucked', local_url: 'gifs/105.gif' },
+{ id: 106, url: 'http://i.imgur.com/X106sQT.gif', description: 'tremors fuck u haha', local_url: 'gifs/106.gif' },
+{ id: 107, url: 'http://i.imgur.com/AWIJKXR.gif', description: 'entourage or some shit?', local_url: 'gifs/107.gif' }
+      ]
+    },
+    methods: {
+      getRandomGif: function() {
+
+
+        // console.log("in get random gif, count")
+        $(document).on('focus', ':not(.popover)', function(){
+            $('.popover').popover('hide');
+        });
+        $('#insultMePls').popover('hide')
+        $('#insultMePls').popover('disable')
+        localStorage.tutorial = 1
+        if(fucks.fav_gifs.length>0 && !fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        //check if you won
+        // console.log((fucks.count+1))
+        // console.log((fucks.times_completed+1))
+        //generate random gif
+        // console.log("loaded gifs count: ")
+        // console.log(fucks.loaded_gifs.length)
+        // var fuck = fucks.fucked_gifs[Math.floor(Math.random() * fucks.fucked_gifs.length)]
+
+        //handle weird loading multiple times shit
+        if (fucks.eligible_gifs.length==0){
+          this.reload_lists()
+          this.getRandomGif()
+        }
+        var randomIndex=Math.floor(Math.random() * fucks.eligible_gifs.length)
+        var fuck = fucks.eligible_gifs[randomIndex]
+        // check if the gif you got is seen in the list as m
+        // this is broken HEREEE
+        // console.log("laksjd")
+        // console.log((fucks.times_completed+1))
+        // console.log(fucks.fucks_list.filter(item => item == fuck).length)
+        // if (fucks.fucks_list.filter(item => item == fuck).length==(fucks.times_completed+1)){
+        // console.log(fucks.fucked_gifs.length)
+        // console.log(fucks.loaded_gifs.length)
+
+        //let them click if we haven't hit the max number of gifs
+        if(fucks.count<fucks.fucked_gifs.length){
+          // console.log("not maxed yet")
+          //see it we've already seen it
+          // var seent_it=false
+          // for (i = 0; i < fucks.fucks_list.length; i++) {
+          //   if(fucks.fucks_list[i].url==fuck.url){
+          //     seent_it=true
+          //   }
+          // }
+          // if (seent_it){
+          //   this.getRandomGif()
+          // }
+          //you win
+          if ((fucks.count+1)/(fucks.times_completed+1)==fucks.fucked_gifs.length){
+                    fucks.times_completed++
+                    // console.log(fucks.times_completed)
+                    localStorage.times_completed=fucks.times_completed
+                    var current_finger = fucks.current_middle_finger
+                    console.log("current_finger: "+current_finger)
+                    $.bootstrapGrowl('<div id="data">congrats you got all the gifs. <hr>'+
+                    '<br><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/>'+
+                    '<img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/>'+
+                    '&nbsp;yeet&nbsp;'+
+                    '<img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/>'+
+                    '<br><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/><img class="growl_finger" src="" width="20%"/>'+
+                    '<hr></div>', {
+                              type: 'success',
+                              delay: 10000,
+                            });
+                    $(".growl_finger").attr("src",current_finger+'.gif');
+                    fucks.fucks_list.unshift(fuck)
+                    fucks.count = fucks.count+1
+                    fucks.current_count = fucks.current_count+1
+                    // console.log("fucks current count: "+fucks.current_count)
+                    localStorage.clickcount = Number(fucks.count)
+                    fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
+                    localStorage.removeItem("fucks_list");
+                    localStorage.setItem("fucks_list", JSON.stringify(fucks.fucks_list));
+                    // console.log("you beat it")
+                  }
+          // if didn't win, display gif
+          else
+          {
+            //add to fucks_list, remove from eligible_gifs
+            fucks.fucks_list.unshift(fuck)
+            fucks.count = fucks.count+1
+            fucks.current_count = fucks.current_count+1
+            // console.log("fucks current count: "+fucks.current_count)
+            localStorage.clickcount = Number(fucks.count)
+            fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
+            localStorage.removeItem("fucks_list");
+            localStorage.setItem("fucks_list", JSON.stringify(fucks.fucks_list));
+            // console.log("eligible_gifs length"+fucks.eligible_gifs.length)
+            //remove from fucked_gifs
+            var deleted_item= fucks.eligible_gifs.splice(randomIndex, 1);
+            // console.log("deleted item")
+            // console.log(deleted_item)
+            // console.log("eligible_gifs length"+fucks.eligible_gifs.length)
+            localStorage.removeItem("eligible_gifs");
+            localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+          }
+          Vue.nextTick(function (){
+            //check the favs in their new positions...well uncheck them first, then recheck
+            var testies="#"+fuck.id+"fav"
+            // console.log("testies: "+testies)
+            $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+            for (i = 0; i < fucks.fucks_list.length; i++) {
+              var testies="#"+fucks.fucks_list[i].id+"fav"
+              // console.log("testies: "+testies)
+              $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+            }
+            for (i = 0; i < fucks.fav_gifs.length; i++) {
+              var testies="#"+fucks.fav_gifs[i].id+"fav"
+              // console.log("testies: "+testies)
+              $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+            }
+          })
+        }
+      },
+      checkFavs: function(){
+        for (i = 0; i < fucks.fav_gifs.length; i++) {
+          var num=fucks.fav_gifs[i].id+"fav"
+          var testies="#"+num
+          // console.log("testies: "+testies)
+          $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+          //move popover
+        }
+        Vue.nextTick(function (){
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            var num=fucks.fav_gifs[i].id+"fav"
+            var testies="#"+num
+            // console.log("testies: "+testies)
+            $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+            //move popover
+          }
+        })
+
+      },
+      submitGif: function(){
+        window.location.href="mailto:gifs@getfucked.org?subject=new gif for getfucked.org &body=please leave a url ending in .gif or attach the gif. ty  "
+      },
+      favGif: function(fuck,button_id) {
+        // show the popover if it's their first fav
+        if(!fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        //hide popover
+        // console.log("current gif")
+        // console.log(fuck)
+        // var index=0
+        var alreadyFav=false
+        for (i = 0; i < fucks.fav_gifs.length; i++) {
+          if (fuck.url==fucks.fav_gifs[i].url){
+            // console.log("already a fav, unfaving")
+            alreadyFav=true
+            // index=i
+            // console.log("index: "+index)
+          }
+        }
+        // save favs
+        if(alreadyFav==false){
+          // console.log("saving fav")
+          var testies='#'+button_id
+          // console.log("new fav...adding to fav_gifs: "+fuck.description)
+          fucks.fav_gifs.unshift(fuck)
+          //local localStorage
+          localStorage.removeItem("fav_gifs");
+          localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
+          $(testies).popover('enable')
+          $(testies).popover('show')
+          // hide copied message
+          $(testies).on('shown.bs.popover', function() {
+            setTimeout(function() {
+                $(testies).popover('hide');
+            }, 1200);
+          });
+          //change star to filled star
+          // $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+        }
+        else{
+          var rons_index=0
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            if(fucks.fav_gifs[i].url==fuck.url){
+              // console.log("aarons index: "+i)
+              rons_index=i
+            }
+          }
+          var deleted_item= fucks.fav_gifs.splice(rons_index, 1);
+          // console.log("deleted item")
+          // console.log(deleted_item)
+          // console.log("------------------------")
+          // console.log(fucks.fav_gifs)
+          // $('#'+button_id).popover('hide');
+          $('#'+button_id).popover('hide')
+          $('#'+button_id).popover('disable')
+          // console.log("unfaving: "+fuck.description)
+          // console.log("button id: "+button_id)
+          // this.fucks.fav_gifs.splice(this.fucks.fav_gifs.indexOf(fuck), 1);
+          //change star to filled star
+
+          // console.log("index: "+index)
+          // if(index==-1){
+          //   index=0
+          // }
+          // fucks.fav_gifs.splice(index);
+          localStorage.removeItem("fav_gifs");
+          localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
+          $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+        }
+        Vue.nextTick(function (){
+          if (button_id.includes("inFavFav") && fucks.fav_gifs.length==0){
+            fucks.closeFavs()
+          }
+          //check the favs in their new positions...well uncheck them first, then recheck
+          for (i = 0; i < fucks.fucks_list.length; i++) {
+            var testies="#"+fucks.fucks_list[i].id+"fav"
+            // console.log("testies: "+testies)
+            $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+          }
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            var testies="#"+fucks.fav_gifs[i].id+"fav"
+            // console.log("testies: "+testies)
+            $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+          }
+        })
+        //initial popover if first save
+
+      },
+      copyUrl: function(text_id,button_id) {
+        var copyText = document.getElementById(text_id);
+        copyText.select();
+        document.execCommand("Copy");
+        // console.log("Copied: " + copyText.value)
+        var testies='#'+button_id
+        // console.log(testies)
+        var test='#insultMePls'
+        // console.log(test)
+        $(testies).popover('enable')
+        $(testies).popover('show')
+        // hide copied message
+        $(testies).on('shown.bs.popover', function() {
+          setTimeout(function() {
+              $(testies).popover('hide');
+          }, 500);
+        });
+        //deselect the textbox
+        if ( document.selection ) {
+       document.selection.empty();
+       } else if ( window.getSelection ) {
+           window.getSelection().removeAllRanges();
+       }
+      },
+      closeFavs: function() {
+        // console.log('inClosedFavs')
+        Vue.nextTick(function (){
+          $('#dropdownMenuButton').dropdown('toggle')
+          // $('#profile_dropdown').dropdown('toggle')
+        })
+      },
+      changeFinger: function(new_id) {
+        console.log("in change finger: "+new_id)
+        console.log(fucks.middle_fingers[new_id-1])
+        localStorage.removeItem("current_middle_finger");
+        fucks.current_middle_finger=""
+        fucks.current_middle_finger=fucks.middle_fingers[new_id-1].path
+        localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
+      },
+      saveGif: function(div) {
+        var testies='#'+div
+        $(testies).popover('enable')
+        $(testies).popover('show')
+        // hide copied message
+        $(testies).on('shown.bs.popover', function() {
+          setTimeout(function() {
+              $(testies).popover('hide');
+          }, 500);
+        });
+      },
+      profileClicked: function() {
+        // console.log("profile clicked")
+        fucks.profile_tutorial=true
+        localStorage.profile_tutorial = 1
+        $('#dropdownMenuButton').popover('hide')
+        $('#dropdownMenuButton').popover('disable')
+      },
+      saveProfile: function() {
+        localStorage.profileName = fucks.profileName
+        localStorage.profileBio = fucks.profileBio
+      },
+      click: function(num) {
+        for (t = 0; t < num; t++) {
+          document.getElementById("insultMePls").click();
+        }
+      },
+      reload_lists: function() {
+        // console.log("in reload lists")
+        //load up eligible_gifs and loaded_gifs and current_eligible_gifs fuck it. also save all those
+        for (var s = 0; s < fucks.fucked_gifs.length; s++) {
+          fucks.loaded_gifs.push(fucks.fucked_gifs[s])
+          fucks.eligible_gifs.push(fucks.fucked_gifs[s])
+        }
+        //wtf start here...why is it 214? and more? wtf
+        // console.log("loaded: "+fucks.loaded_gifs.length+" : "+fucks.eligible_gifs.length)
+        // localStorage.removeItem("eligible_gifs");
+        // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+        // console.log("saved...ready for clicks")
+      },
+      saveFavorite: function(fav, where_from) {
+        if (where_from == "favs") {
+          var checked = false
+        } else {
+          var checked = document.getElementById(fav).checked
+        }
+        if (checked) {
+          fucks.fav_gifs.unshift(fav)
+          localStorage.removeItem("fav_gifs");
+          localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
+        } else {
+          const index = fucks.fav_gifs.indexOf(fav);
+          var unchecked = document.getElementsByName(fav)
+          for (var i = 0; i < unchecked.length; i++) {
+            unchecked[i].checked = false
+          }
+          fucks.fav_gifs.splice(index, 1);
+          localStorage.removeItem("fav_gifs");
+          localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
+        }
+        Vue.nextTick(function (){
+          //check in new location
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            var check = document.getElementsByName(fucks.fav_gifs[i])
+            for (var a = 0; a < check.length; a++) {
+              check[a].checked = true
+            }
+          }
+        })
+      },
+      clear_specific: function() {
+        if (clear_insults_boolean) {
+          // console.log("clear insults boolean")
+          fucks.fucks_list = []
+          fucks.loaded_gifs = []
+          fucks.eligible_gifs = []
+          fucks.current_eligible_gifs = []
+          fucks.current_count = 0;
+          fucks.count = 0;
+          localStorage.clickcount = 0;
+          localStorage.removeItem("fucks_list");
+          document.getElementById("clear_insults").checked = false;
+          fucks.reload_lists()
+        }
+        if (clear_favs) {
+          //uncheck favs in insult_list
+          fucks.fav_gifs = []
+          localStorage.removeItem("fav_gifs");
+          document.getElementById("clear_favs").checked = false;
+          Vue.nextTick(function (){
+            //check the favs in their new positions...well uncheck them first, then recheck
+            for (i = 0; i < fucks.fucks_list.length; i++) {
+              var testies="#"+fucks.fucks_list[i].id+"fav"
+              $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+            }
+            for (i = 0; i < fucks.fav_gifs.length; i++) {
+              var testies="#"+fucks.fav_gifs[i].id+"fav"
+              $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+            }
+          })
+        }
+        if (clear_profile) {
+          fucks.profileName = ''
+          fucks.profileBio = ''
+          localStorage.removeItem("profileName");
+          localStorage.removeItem("profileBio");
+          document.getElementById("clear_profile").checked = false;
+        }
+        if (clear_level) {
+          document.getElementById("clear_level").checked = false;
+          fucks.count = 0;
+          fucks.current_count = 0;
+          localStorage.clickcount = 0;
+          fucks.badge_list = []
+          localStorage.removeItem("badge_list");
+          var found_progress = false
+          for (i = 0; i < fucks.progress.length; i++) {
+            if (found_progress === false && fucks.count < fucks.progress[i].int) {
+              fucks.next_progress_count = fucks.progress[i].int
+              found_progress = true
+              fucks.level_count = i + 1
+            }
+          }
+          // document.getElementById("progressBar").style.width = fucks.count / fucks.next_progress_count * 100 + "%";
+        }
+        document.getElementById("clear_selected").disabled = true;
+        clear_buttons_count = 0
+      },
+      showProfilePopover: function(){
+        Vue.nextTick(function (){
+          // console.log("sleeping...")
+          // sleep(100);
+          $('#dropdownMenuButton').popover('show')
+        })
+      },
+      checkFavs: function(){
+        Vue.nextTick(function (){
+          //check in new location
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            document.getElementById(fucks.fav_gifs[i]).checked = true
+          }
+          for (i = 0; i < fucks.fav_gifs.length; i++) {
+            var check = document.getElementsByName(fucks.fav_gifs[i])
+            for (var a = 0; a < check.length; a++) {
+              check[a].checked = true
+            }
+          }
+        })
+      },
+      clear: function() {
+        localStorage.removeItem("tutorial");
+        localStorage.removeItem("current_middle_finger");
+        fucks.current_middle_finger=""
+        fucks.current_middle_finger=fucks.middle_fingers[0].path
+        localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
+
+        localStorage.removeItem("profile_tutorial");
+        localStorage.removeItem("times_completed")
+        fucks.profile_tutorial=false
+
+        fucks.times_completed=0
+        $('#insultMePls').popover('enable')
+        $('#insultMePls').popover('show')
+        $('#dropdownMenuButton').popover('enable')
+        // $('#dropdownMenuButton').popover('show')
+        fucks.insult = "";
+        localStorage.removeItem("insult_string");
+        localStorage.removeItem("clickcount");
+        localStorage.removeItem("fucks_list");
+        localStorage.removeItem("fav_gifs");
+        localStorage.removeItem("badge_list");
+        localStorage.removeItem("eligible_gifs");
+        localStorage.removeItem("loaded_gifs");
+        localStorage.removeItem("all_gifs_loaded");
+        fucks.count = 0;
+        fucks.current_count = 0;
+        localStorage.clickcount = 0;
+        fucks.fucks_list = []
+        fucks.fav_gifs = []
+        fucks.eligible_gifs = []
+        fucks.loaded_gifs = []
+        fucks.profileName = ''
+        fucks.profileBio = ''
+        fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
+        localStorage.removeItem("profileName");
+        localStorage.removeItem("profileBio");
+        fucks.reload_lists()
+        var found_progress = false
+        for (i = 0; i < fucks.progress.length; i++) {
+          if (found_progress === false && fucks.count < fucks.progress[i].int) {
+            fucks.next_progress_count = fucks.progress[i].int
+            found_progress = true
+            fucks.level_count = i + 1
+          }
+        }
+      },
+      template: '<div class="v-cloak--hidden" v-cloak> {{insult}}  </div>'
+    }
+  })
+
+  function hidePopover(id) {
+    $(id).popover('hide')
+  }
+
+  // monitor clear buttons
+  var clear_insults_boolean = false
+  var clear_level = false
+  var clear_favs = false
+  var clear_profile = false
+  var clear_buttons_count = 0
+  $('#clear_insults').change(function() {
+    if ($(this).is(':checked') && fucks.all_gifs_loaded) {
+      document.getElementById("clear_selected").disabled = false;
+      clear_buttons_count++
+      clear_insults_boolean = true
+    } else {
+      clear_buttons_count--
+      if (clear_buttons_count == 0) {
+        document.getElementById("clear_selected").disabled = true;
+      }
+      clear_insults_boolean = false
+    }
+  });
+  $('#clear_level').change(function() {
+    if ($(this).is(':checked') && fucks.all_gifs_loaded) {
+      document.getElementById("clear_selected").disabled = false;
+      clear_buttons_count++
+      clear_level = true
+    } else {
+      clear_buttons_count--
+      if (clear_buttons_count == 0) {
+        document.getElementById("clear_selected").disabled = true;
+      }
+      clear_level = false
+    }
+  });
+  $('#clear_favs').change(function() {
+    if ($(this).is(':checked') && fucks.all_gifs_loaded) {
+      document.getElementById("clear_selected").disabled = false;
+      clear_buttons_count++
+      clear_favs = true
+    } else {
+      clear_buttons_count--
+      if (clear_buttons_count == 0) {
+        document.getElementById("clear_selected").disabled = true;
+      }
+      clear_favs = false
+    }
+  });
+  $('#clear_profile').change(function() {
+    if ($(this).is(':checked') && fucks.all_gifs_loaded) {
+      document.getElementById("clear_selected").disabled = false;
+      clear_buttons_count++
+      clear_profile = true
+    } else {
+      clear_buttons_count--
+      if (clear_buttons_count == 0) {
+        document.getElementById("clear_selected").disabled = true;
+      }
+      clear_profile = false
+    }
+  });
+  function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+  // profile closed without saving....don't worry we'll save anyways :)
+  // also do not let the user close the dropdown without meaning too
+  var wtfClicks=0
+  var firstClick=0
+  $('#profile_dropdown').on('hide.bs.dropdown', function() {
+    fucks.saveProfile();
+    wtfClicks=0
+  });
+  $('#dropdownMenuButton').on('click', function() {
+    if(firstClick!=0 && wtfClicks==0){
+      wtfClicks++
+    }
+  });
+  $('#profile_dropdown').on('click', function() {
+    // console.log("clicked in profile")
+    // console.log(wtfClicks)
+    if(wtfClicks==0){
+      wtfClicks++
+      firstClick++
+    }
+    else{
+      return false;
+    }
+  });
+//   $('#profile_dropdown').on({
+//     'shown.bs.dropdown': function() { this.closable = false; },
+//     "click":             function() { this.closable = false; },
+//     "hide.bs.dropdown":  function() { this.closable = true;; }
+// });
+  $(function() {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+  }
+  // ------------------------
+  // on page load
+  // ------------------------
+  window.onload = function() {
+    fucks.current_count=0
+    // var i=0
+    // while (i < fucks.fucked_gifs.length) {
+    //   // console.log("The number is " + i);
+    //   var my_image = new Image();
+    //   console.log("before loading... "+i)
+    //   my_image.src = fucks.fucked_gifs[i].url;
+    //   var caption=fucks.fucked_gifs[i].description
+    //   fucks.loaded_gifs.push(fucks.fucked_gifs[i])
+    //   my_image.onload = function () {
+    //     console.log("image is loaded: "+my_image.src);
+    //     i++;
+    //   }
+    // }
+    //first load fucked_gifs full of shit for us to use
+    var loadAll=false
+    if (!localStorage.eligible_gifs) {
+      localStorage.eligible_gifs = [];
+      loadAll=true
+      // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.all_gifs));
+      // fucks.fucked_gifs=fucks.all_gifs
+      // console.log("no eligible_gifs...setting")
+    } else {
+      var retrievedData = localStorage.getItem("eligible_gifs");
+      var parsedInsults = JSON.parse(retrievedData);
+      // fucks.eligible_gifs = parsedInsults
+      if(!localStorage.all_gifs_loaded){
+        fucks.current_eligible_gifs = parsedInsults
+        // console.log("current_eligible_gifs size: "+fucks.current_eligible_gifs.length)
+      }
+      else{
+        fucks.eligible_gifs = parsedInsults
+        // console.log("eligible_gifs size: "+fucks.eligible_gifs.length)
+      }
+    }
+    if (localStorage.profile_tutorial) {
+      $('#dropdownMenuButton').popover('hide')
+      $('#dropdownMenuButton').popover('disable')
+    }
+    if (!localStorage.tutorial) {
+      // console.log("noTutorial")
+      // fucks.clear()
+      // $('#insultMePls').popover('hide')
+      // fucks.showProfilePopover()
+      $('#insultMePls').popover('show')
+    } else {
+      $('#insultMePls').popover('hide')
+      $('#insultMePls').popover('disable')
+    }
+    if(!localStorage.current_middle_finger){
+      console.log("middle fingers 0")
+      console.log(fucks.middle_fingers[0])
+      fucks.current_middle_finger=fucks.middle_fingers[0].path
+      console.log("current middle finger: ")
+      console.log(fucks.current_middle_finger)
+      localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
+      // console.log("current_eligible_gifs size: "+fucks.current_eligible_gifs.length)
+    }
+    else{
+      var retrievedData = localStorage.getItem("current_middle_finger");
+      var parsedInsults = JSON.parse(retrievedData);
+      fucks.current_middle_finger = parsedInsults
+      console.log("current middle finger: ")
+      console.log(fucks.current_middle_finger)
+      // console.log("eligible_gifs size: "+fucks.eligible_gifs.length)
+    }
+    // cache these babies
+    function is_cached(src) {
+      var image = new Image();
+      image.src = src;
+      // console.log(image.complete)
+      return image.complete;
+    }
+    // console.log('fucks gif length')
+    // console.log(fucks.fucked_gifs.length)
+
+    var loadedGifCount=0
+    // load gifs
+    function load_gifs(num)
+    {
+      // if(loadedGifCount>=1 && !localStorage.profile_tutorial){
+      //   fucks.showProfilePopover()
+      // }
+      var list_length=0
+      if (loadAll){
+        list_length=fucks.fucked_gifs.length
+      }
+      else{
+        list_length=fucks.current_eligible_gifs.length
+      }
+      if(fucks.loaded_gifs.length!=list_length)
+      {
+        if (loadedGifCount==list_length){
+          loadedGifCount=0
+        }
+        //this includes could be why it doesn't always load
+        if (loadAll){
+          var image_cached = is_cached(fucks.fucked_gifs[loadedGifCount].url)
+          if(!image_cached){
+            // console.log('image not cached')
+            var my_image = new Image();
+            my_image.src = fucks.fucked_gifs[loadedGifCount].url;
+            var caption=fucks.fucked_gifs[loadedGifCount].description
+            my_image.onload = function () {
+              // console.log("loaded image: "+my_image.src);
+              fucks.loaded_gifs.push(fucks.fucked_gifs[loadedGifCount])
+              fucks.eligible_gifs.push(fucks.fucked_gifs[loadedGifCount])
+              localStorage.removeItem("eligible_gifs");
+              localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+              loadedGifCount++
+              load_gifs(fucks.fucked_gifs[loadedGifCount])
+            }
+          }
+          else{
+            // console.log('image IS cached')
+            fucks.loaded_gifs.push(fucks.fucked_gifs[loadedGifCount])
+            fucks.eligible_gifs.push(fucks.fucked_gifs[loadedGifCount])
+            localStorage.removeItem("eligible_gifs");
+            localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+            loadedGifCount++
+            load_gifs(fucks.fucked_gifs[loadedGifCount])
+          }
+        }
+        else{
+          var image_cached = is_cached(fucks.current_eligible_gifs[loadedGifCount].url)
+          if(!image_cached){
+            // console.log('image not cached')
+            var my_image = new Image();
+            my_image.src = fucks.current_eligible_gifs[loadedGifCount].url;
+            var caption=fucks.current_eligible_gifs[loadedGifCount].description
+            my_image.onload = function () {
+              // console.log("loaded image: "+my_image.src);
+              fucks.loaded_gifs.push(fucks.current_eligible_gifs[loadedGifCount])
+              fucks.eligible_gifs.push(fucks.current_eligible_gifs[loadedGifCount])
+              localStorage.removeItem("eligible_gifs");
+              localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+              loadedGifCount++
+              load_gifs(fucks.current_eligible_gifs[loadedGifCount])
+            }
+          }
+          else{
+            // console.log('image IS cached')
+            fucks.loaded_gifs.push(fucks.current_eligible_gifs[loadedGifCount])
+            fucks.eligible_gifs.push(fucks.current_eligible_gifs[loadedGifCount])
+            localStorage.removeItem("eligible_gifs");
+            localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+            loadedGifCount++
+            load_gifs(fucks.current_eligible_gifs[loadedGifCount])
+          }
+        }
+      }
+      else {
+        $.bootstrapGrowl('all gifs loaded. click away', {
+                  type: 'success',
+                  delay: 400,
+                });
+        for (i = 0; i < fucks.fav_gifs.length; i++) {
+          var num=fucks.fav_gifs[i].id+"fav"
+          var testies="#"+num
+          // console.log("testies: "+testies)
+          $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+          //move popover
+        }
+        localStorage.setItem("all_gifs_loaded", true);
+        // if (!localStorage.profile_tutorial) {
+        //   console.log("setting popover")
+        //   fucks.showProfilePopover()
+        // }
+        // if (!localStorage.profile_tutorial) {
+        //   fucks.showProfilePopover()
+        // }
+        //move popover when gifs finish loading
+        if (!localStorage.tutorial) {
+        $('#insultMePls').popover('hide')
+        $('#insultMePls').popover('dispose')
+        $('#insultMePls').popover('show')
+      }
+      fucks.all_gifs_loaded=true
+      }
+      if(fucks.loaded_gifs.length>0 && fucks.fucked_gifs.length>0){
+        document.getElementById("progressBar").style.width = fucks.loaded_gifs.length / fucks.fucked_gifs.length * 100 + "%";
+      }
+      // console.log("loaded gifs count: "+fucks.loaded_gifs.length)
+    }
+    // console.log("fucked gifs count: "+fucks.fucked_gifs.length)
+
+    if (!localStorage.all_gifs_loaded) {
+      load_gifs(fucks.fucked_gifs[loadedGifCount]);
+    }
+    else{
+      fucks.all_gifs_loaded=true
+      // console.log("all gifs loaded")
+    }
+// document.write(result);
+    // load images so you can spam
+    // for (i = 0; i < fucks.fucked_gifs.length; i++) {
+    //   var my_image = new Image();
+    //   console.log("before loading... "+i)
+    //   my_image.src = fucks.fucked_gifs[i].url;
+    //   var caption=fucks.fucked_gifs[i].description
+    //   fucks.loaded_gifs.push(fucks.fucked_gifs[i])
+    //   my_image.onload = function () {
+    //     console.log("image is loaded: "+my_image.src);
+    //   }
+    // }
+    if (!localStorage.times_completed) {
+      localStorage.times_completed=0
+    }
+    else{
+      fucks.times_completed=parseInt(localStorage.times_completed)
+    }
+    if (!localStorage.clickcount) {
+      localStorage.clickcount = 0;
+    } else {
+      fucks.count = parseInt(localStorage.clickcount);
+    }
+    if (!localStorage.profileName) {
+      localStorage.profileName = '';
+    } else {
+      fucks.profileName = localStorage.profileName;
+    }
+    if (!localStorage.profileBio) {
+      localStorage.profileBio = '';
+    } else {
+      fucks.profileBio = localStorage.profileBio;
+    }
+    if (!localStorage.badge_list) {
+      localStorage.badge_list = [];
+    } else {
+      var retrievedData = localStorage.getItem("badge_list");
+      var parsedBadges = JSON.parse(retrievedData);
+      fucks.badge_list = parsedBadges
+    }
+    if (!localStorage.fucks_list) {
+      localStorage.fucks_list = [];
+      // console.log("no fucks list")
+    } else {
+      var retrievedData = localStorage.getItem("fucks_list");
+      var parsedInsults = JSON.parse(retrievedData);
+      fucks.fucks_list = parsedInsults
+      // console.log(fucks.fucks_list)
+    }
+    if (!localStorage.fav_gifs) {
+      localStorage.fav_gifs = [];
+    } else {
+      var retrievedData = localStorage.getItem("fav_gifs");
+      var parsedFavs = JSON.parse(retrievedData);
+      fucks.fav_gifs = parsedFavs
+      // for (i = 0; i < fucks.fav_gifs.length; i++) {
+      //   var testies="#"+fucks.fav_gifs[i].id+"3"
+      //   console.log("testies: "+testies)
+      //   $(testies).html('<i class="fas fa-star"></i>')
+      // }
+    }
+    var found_progress = false
+    for (i = 0; i < fucks.progress.length; i++) {
+      if (found_progress === false && fucks.count < fucks.progress[i].int) {
+        fucks.next_progress_count = fucks.progress[i].int
+        found_progress = true
+        fucks.level_count = i + 1
+      }
+    }
+    if (found_progress == false) {
+      fucks.next_progress_count = fucks.progress[fucks.progress.length - 1].int
+    }
+    // document.getElementById("progressBar").style.width = fucks.count / fucks.next_progress_count * 100 + "%";
+    if (!localStorage.insult_string) {
+      localStorage.insult_string = "";
+    } else {
+      fucks.insult = localStorage.insult_string;
+    }
+    $("#showGifs").click();
+    fucks.checkFavs()
+    fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
+  }
+</script>
+
+<!-- rons css -->
+<style>
+.rons-menu {
+    width: 100% !important;
+    /* height: 400px !important; */
+}
+.rons_container{
+  text-align: center;
+}
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+text-rendering: optimizeLegibility;
+@-moz-document url-prefix() {
+  .hmm {
+     height:600px;
+  }
+}
+  .progress-bar {
+    background-color: #000000 !important;
+  }
+  #my-popover {
+    left: -169px!important;
+  }
+
+  #my-popover .arrow {
+      left: 90%
+  }
+  .popover {
+    text-align: center;
+    /* top: 45px !important;
+    left: -18px !important; */
+    /* left: 379px !important; */
+  }
+  /* .popover.dropdownMenuButton {{
+    text-align: center;
+    top: 45px !important;
+    left: -18px !important;
+  } */
+  .rons_modal {
+    min-width: 60%;
+    width: 60%;
+  }
+  .rons_button{
+    background: #ffffff;
+    color:#000000;
+    border-color: #000000;
+  }
+  .rons_finger{
+    background: #ffffff;
+    color:#000000;
+    margin: 0;
+    padding: 0;
+  }
+.rons_finger:active {outline:0;}
+  .rons_button:hover{
+    background: #f6f4f1;
+    color:#000000;
+  }
+  .rons_button:active {
+    background: #f6f4f1;
+    color:#000000;
+  }
+  .rons_button:focus {outline:0;}
+
+  .profile_button:focus {outline:0;}
+
+  button:focus {outline:0;}
+  .main_content{
+    max-height: 100%; !important
+    min-height: 100%; !important
+    height: 100%; !important
+  }
+  .hmm {
+    max-height: 67%;
+    min-height: 67%;
+    min-width: 100%;
+    width: 100%;
+    /* height: 60%; */
+    overflow-y: scroll;
+    /* overflow:hidden; */
+    /* font-size: 22px; */
+  }
+  .fav_gifs {
+    max-height: 65%;
+    min-height: 65%;
+    min-width: 100%;
+    width: 100%;
+    /* height: 60%; */
+    /* overflow-y: scroll; */
+    /* overflow:hidden; */
+    /* font-size: 22px; */
+  }
+
+  .clear {
+    width: 100px; !important
+  }
+
+  .fav {
+    height: 500px; !important
+    /* min-height: 70%; */
+    /* min-width: 100%;
+    width: 100%; */
+    /* height: 60%; */
+    overflow-y: scroll;
+    /* overflow:hidden; */
+    /* font-size: 22px; */
+  }
+
+  .profile-button {
+    background-color: #ffffff;
+    border: 0;
+    max-width: 100%;
+  }
+
+  .profile-button:hover {
+    background-color: #ffffff;
+  }
+
+  /* scrollbar customization */
+
+  .mostly-customized-scrollbar {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .mostly-customized-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 10px;
+  }
+
+  .navbar-collapse.collapse {
+    display: block!important;
+  }
+
+  .navbar-nav>li,
+  .navbar-nav {
+    float: left !important;
+  }
+
+  .navbar-nav.navbar-right:last-child {
+    margin-right: -15px !important;
+  }
+
+  .navbar-right {
+    float: right!important;
+  }
+
+  .dropdown-pull-right {
+    float: right !important;
+    right: 0;
+    left: auto;
+  }
+
+  .dropdown-pull-right>.dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+
+  .table-borderless>tbody>tr>td,
+  .table-borderless>tbody>tr>th,
+  .table-borderless>tfoot>tr>td,
+  .table-borderless>tfoot>tr>th,
+  .table-borderless>thead>tr>td,
+  .table-borderless>thead>tr>th {
+    border: none;
+    font-size: 22px;
+  }
+  [v-cloak] .v-cloak--hidden{
+    display: none;
+  }
+  [v-cloak] {
+    display: none;
+  }
+</style>
