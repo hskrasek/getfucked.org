@@ -12,6 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
+<script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
 <meta name="theme-color" content="#000000">
 <link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, user-scalable=0">
@@ -46,6 +47,7 @@
         <!-- <div class="row"> -->
           <!-- <div class="col"> -->
             <center>
+              <!-- Trigger -->
               <hr>
               <!-- profile dropdown button-->
               <div class="dropdown dropdown-pull-right profile_button" id="profile_dropdown">
@@ -77,20 +79,25 @@
                       <hr>
                       <center><h4>favs</h4><center>
                       <hr>
-                      <div class="container fav_gifs">
+                      <div class="container fav_gifs" id="favs_loop">
                         <!-- <div class="row"> -->
                           <div v-for="fav in fav_gifs" v-cloak>
                             <p>{{fav.description}}</p>
                             <img :src="fav.url" :id="fav" width=100% v-cloak>
-                            <input type="text" :value="fav.url" :id="fav.id" style="position: absolute;left: -9999px;">
-                            <span class="float-right">
+                            <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
+                            <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
+                            <span class="float-right" >
                               <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavDownload'" v-on:click="saveGif(fav.id+'inFavDownload')" data-toggle="popover" data-placement="bottom" title="downloading...">
                                 <a :download="fav.description" :href="fav.local_url" title="ImageName">
                                     <i class="far fa-save" style="font-size:20px"></i>
                                 </a>
                               </button>
                               |
-                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavCopy'" v-on:click="copyUrl(fav.id,fav.id+'inFavCopy')" data-toggle="popover"  data-placement="bottom" title="copied" :data-content="fav.url">
+                              <!-- <button class="btn_fav btn-light" role="button" :data-clipboard-text="fav.url" :id="fav.id+'favCopy'" v-on:click="newCopyUrl(fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
+                                  copy<i class="far fa-copy" style="font-size:20px"></i>
+                              </button> -->
+                              <p :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;">{{fav.url}}</p>
+                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'favCopy'" v-on:click="copyUrl(fav.id+'favCopyText',fav.id+'favCopy')" data-toggle="popover"  data-placement="bottom" title="copied" :data-content="fav.url">
                                 <i class="far fa-copy" style="font-size:20px"></i>
                               </button>
                               |
@@ -200,17 +207,20 @@
               <div v-for="fuck in fucks_list" v-cloak>
                 <br>
                 <img :src="fuck.url" :id="fuck" width=100% v-cloak>
-                <input type="text" :value="fuck.url" :id="fuck.id" style="position: absolute;left: -9999px;">
+                <input type="text" :value="fuck.url" :id="fuck.id+'copyText'" style="position: absolute;left: -9999px;">
                 <span class="float-right">
-                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+2" v-on:click="saveGif(fuck.id+2)" data-toggle="popover" data-placement="bottom" title="downloading...">
+                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+'download'" v-on:click="saveGif(fuck.id+'download')" data-toggle="popover" data-placement="bottom" title="downloading...">
                     <a :download="fuck.description" :href="fuck.local_url" title="ImageName">
                         <i class="far fa-save" style="font-size:20px"></i>
                     </a>
                   </button>
                   |
-                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+1" v-on:click="copyUrl(fuck.id,fuck.id+1)" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
-                    <i class="far fa-copy" style="font-size:20px"></i>
+                  <button class="btn btn-light" role="button" :data-clipboard-text="fuck.url" :id="fuck.id+'newCopy'" v-on:click="newCopyUrl(fuck.id+'newCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
+                      <i class="far fa-copy" style="font-size:20px"></i>
                   </button>
+                  <!-- <button type="button" role="button" class="btn btn-light" :id="fuck.id+'copy'" v-on:click="copyUrl(fuck.id+'copyText',fuck.id+'copy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
+                    <i class="far fa-copy" style="font-size:20px"></i>
+                  </button> -->
                   |
                   <button type="button" role="button" class="btn btn-light" :id="fuck.id+'fav'" v-on:click="favGif(fuck,fuck.id+'fav')" data-toggle="popover" data-placement="bottom" title="fav'd" :data-content="fuck.description">
                     <i class="far fa-star" style="font-size:20px"></i>
@@ -317,7 +327,15 @@
 // import VueProgressiveImage from 'vue-progressive-image'
 // Vue.use(VueProgressiveImage)
 //once doc is ready, check all favs in insult_list
+// ready boy
 $(document).ready(function() {
+//   new ClipboardJS('.btn', {
+//     container: document.getElementById('dropdown-menu')
+// });
+new ClipboardJS('.btn', {});
+new ClipboardJS('.btn_fav', {
+    container: document.getElementById('favs_loop')
+});
   for (i = 0; i < fucks.fav_gifs.length; i++) {
     var num=fucks.fav_gifs[i].id+"fav"
     var testies="#"+num
@@ -762,9 +780,15 @@ $(document).ready(function() {
 
       },
       copyUrl: function(text_id,button_id) {
-        var copyText = document.getElementById(text_id);
-        copyText.select();
-        document.execCommand("Copy");
+        var element='#'+text_id
+        copyToClipboard(element)
+        // console.log("text_id in copy_url: "+text_id)
+        // var copyText = document.getElementById(text_id);
+        // copyText.select();
+        // var selObj = window.getSelection();
+        // console.log("window selected")
+        // console.log(selObj)
+        // document.execCommand("copy");
         // console.log("Copied: " + copyText.value)
         var testies='#'+button_id
         // console.log(testies)
@@ -779,11 +803,38 @@ $(document).ready(function() {
           }, 500);
         });
         //deselect the textbox
+        var hideKeyboard = function() {
+          document.activeElement.blur();
+          $("input").blur();
+        };
         if ( document.selection ) {
        document.selection.empty();
        } else if ( window.getSelection ) {
            window.getSelection().removeAllRanges();
        }
+      },
+      newCopyUrl: function(button_id) {
+        // var copyText = document.getElementById(text_id);
+        // copyText.select();
+        // document.execCommand("Copy");
+        Vue.nextTick(function (){
+          var testies1='#'+button_id
+          console.log("in new copy: "+testies1)
+          $(testies1).popover('enable')
+          $(testies1).popover('show')
+          // hide copied message
+          $(testies1).on('shown.bs.popover', function() {
+            setTimeout(function() {
+                $(testies1).popover('hide');
+            }, 500);
+          });
+        })
+        //deselect the textbox
+       //  if ( document.selection ) {
+       // document.selection.empty();
+       // } else if ( window.getSelection ) {
+       //     window.getSelection().removeAllRanges();
+       // }
       },
       closeFavs: function() {
         // console.log('inClosedFavs')
@@ -1003,6 +1054,13 @@ $(document).ready(function() {
   function hidePopover(id) {
     $(id).popover('hide')
   }
+  function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
 
   // monitor clear buttons
   var clear_insults_boolean = false
