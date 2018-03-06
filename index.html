@@ -125,6 +125,7 @@
                 <!-- </div> -->
               </div>
               <div class="container">
+                <!-- <div class="container"> -->
                 <!-- here, adding the other fingers and shit -->
                 <h2>
                   <!-- middle finger select -->
@@ -172,24 +173,19 @@
                             <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
                               <img :src="finger.path+'.png'" width="50%">
                             </button>
-
-                          <!-- <button type="button" class="btn">
-                            <img src="middle_fingers/simple_black_128x128.png" width="50%">
-                          </button>
-                          <button type="button" class="btn">
-                            <img src="middle_fingers/zombie_128x128.png" width="50%">
-                          </button> -->
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   </div>
                 </h2>
-                <div v-cloak>total gifs: {{fucked_gifs.length}} | your gifs: {{count}}</div>
+                <hr style="padding:0; margin:0;">
+                <center>total gifs: {{fucked_gifs.length}} | your gifs: {{count}}</center>
+                <hr style="padding:0; margin:0;">
+              <!-- </div> -->
 
-              </div>
               <!-- <hr> -->
-              <hr>
               <transition name="fade">
               <div v-if="all_gifs_loaded" ></div>
               <div v-else-if="loaded_gifs.length>35" class="progress">
