@@ -15,10 +15,6 @@
 <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
 <meta name="theme-color" content="#000000">
 <link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, user-scalable=0">
-<meta name="Description" content="click to get random gifs. save your favs for later, download or copy a url to share. everything will be saved when you come back">
-<meta name="Keywords" content="getfucked, getfucked.org, get fucked gifs, funny">
-<meta name="Author" content="ron">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no,  user-scalable=0">
@@ -39,7 +35,25 @@
   </script>
   <title>fucked</title>
 </head>
-<div class="main_content col-md-5 offset-md-3" id="data">
+<div class="h-100 main_content col-md-5 offset-md-3" id="data">
+    <!-- <div class="dropdown show">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown link
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="newDropdown">
+        <button class="btn" data-clipboard-text="in dropdown sucker" id="newDropdownButton">
+        Copy to clipboard | <i class="far fa-copy" style="font-size:20px"></i>
+        </button>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn rons_button btn-lg btn-block" style="font-size: 25px;">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
   <!-- centered container -->
   <!-- <div class=""> -->
     <!-- <div class="row"> -->
@@ -50,7 +64,7 @@
               <!-- Trigger -->
               <hr>
               <!-- profile dropdown button-->
-              <div class="dropdown dropdown-pull-right profile_button" id="profile_dropdown">
+              <div class="dropdown dropdown-pull-right show" id="profile_dropdown">
                 <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" title="favs" data-content="see your favs here">
                 <i class="fas fa-user-circle" style="font-size: 45px;"></i><span v-if="fav_gifs.length>0" class="badge badge-pill badge-dark">{{fav_gifs.length}}</span>
                 </button>
@@ -93,13 +107,16 @@
                                 </a>
                               </button>
                               |
+                              <button class="btn btn-light" :data-clipboard-text="fav.url" role="button" :id="fav.id+'favCopy'" v-on:click="showFavGrowl(fav)" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
+                              <i class="far fa-copy" style="font-size:20px"></i>
+                              </button>
                               <!-- <button class="btn_fav btn-light" role="button" :data-clipboard-text="fav.url" :id="fav.id+'favCopy'" v-on:click="newCopyUrl(fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
                                   copy<i class="far fa-copy" style="font-size:20px"></i>
                               </button> -->
-                              <p :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;">{{fav.url}}</p>
+                              <!-- <p :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;">{{fav.url}}</p>
                               <button type="button" role="button" class="btn btn-light" :id="fav.id+'favCopy'" v-on:click="copyUrl(fav.id+'favCopyText',fav.id+'favCopy')" data-toggle="popover"  data-placement="bottom" title="copied" :data-content="fav.url">
                                 <i class="far fa-copy" style="font-size:20px"></i>
-                              </button>
+                              </button> -->
                               |
                               <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavFav'" v-on:click="favGif(fav,fav.id+'inFavFav')">
                                 <i class="fas fa-star" style="font-size:20px"></i>
@@ -115,7 +132,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col">
-                          <button type="button" v-on:click="closeFavs()" class="btn rons_button btn-lg btn-block" style="font-size: 25px;" data-dismiss="modal">close</button>
+                          <button type="button" class="btn rons_button btn-lg btn-block" style="font-size: 25px;" data-dismiss="modal">close</button>
                         </div>
                       </div>
                     </div>
@@ -824,6 +841,7 @@ new ClipboardJS('.btn_fav', {
                 $(testies1).popover('hide');
             }, 500);
           });
+          // fucks.closeFavs()
         })
         //deselect the textbox
        //  if ( document.selection ) {
@@ -831,6 +849,14 @@ new ClipboardJS('.btn_fav', {
        // } else if ( window.getSelection ) {
        //     window.getSelection().removeAllRanges();
        // }
+      },
+      showFavGrowl: function(fav) {
+        console.log("showing growl sucka:: "+fav.url)
+        var message='copied: '+fav.description+'<br><hr>'+fav.url
+        $.bootstrapGrowl(message, {
+                  type: 'success',
+                  delay: 1000,
+                });
       },
       closeFavs: function() {
         // console.log('inClosedFavs')
@@ -1126,27 +1152,41 @@ new ClipboardJS('.btn_fav', {
 }
   // profile closed without saving....don't worry we'll save anyways :)
   // also do not let the user close the dropdown without meaning too
-  var wtfClicks=0
-  var firstClick=0
+  // var wtfClicks=0
+  // var firstClick=0
   $('#profile_dropdown').on('hide.bs.dropdown', function() {
+    // console.log('closing...')
     fucks.saveProfile();
-    wtfClicks=0
+    // wtfClicks=0
   });
-  $('#dropdownMenuButton').on('click', function() {
-    if(firstClick!=0 && wtfClicks==0){
-      wtfClicks++
-    }
+  // $('#dropdownMenuButton').on('click', function() {
+  //   if(firstClick!=0 && wtfClicks==0){
+  //     wtfClicks++
+  //   }
+  // });
+  // $('#profile_dropdown').on('click', function() {
+  //   if(wtfClicks==0){
+  //     wtfClicks++
+  //     firstClick++
+  //   }
+  //   else{
+  //     // return false;
+  //   }
+  //   console.log("clicked in profile")
+  //   console.log(wtfClicks)
+  // });
+
+
+  $('#newDropdown').on('hide.bs.dropdown', function() {
+    console.log('closing...newDropdown')
+    // fucks.saveProfile();
+    // wtfClicks=0
   });
-  $('#profile_dropdown').on('click', function() {
-    // console.log("clicked in profile")
-    // console.log(wtfClicks)
-    if(wtfClicks==0){
-      wtfClicks++
-      firstClick++
-    }
-    else{
-      return false;
-    }
+  $('#newDropdownButton').on('click', function() {
+    console.log("newDropdownHit")
+  });
+  $('#newDropdown').on('click', function() {
+    console.log("clicked")
   });
 //   $('#profile_dropdown').on({
 //     'shown.bs.dropdown': function() { this.closable = false; },
@@ -1341,8 +1381,8 @@ new ClipboardJS('.btn_fav', {
         $('#insultMePls').popover('hide')
         $('#insultMePls').popover('dispose')
         $('#insultMePls').popover('show')
-      }
-      fucks.all_gifs_loaded=true
+        }
+        fucks.all_gifs_loaded=true
       }
       if(fucks.loaded_gifs.length>0 && fucks.fucked_gifs.length>0){
         document.getElementById("progressBar").style.width = fucks.loaded_gifs.length / fucks.fucked_gifs.length * 100 + "%";
@@ -1351,13 +1391,12 @@ new ClipboardJS('.btn_fav', {
     }
     // console.log("fucked gifs count: "+fucks.fucked_gifs.length)
 
-    if (!localStorage.all_gifs_loaded) {
+    // if (!localStorage.all_gifs_loaded) {
       load_gifs(fucks.fucked_gifs[loadedGifCount]);
-    }
-    else{
-      fucks.all_gifs_loaded=true
-      // console.log("all gifs loaded")
-    }
+    // }
+    // else{
+    //   fucks.all_gifs_loaded=true
+    // }
 // document.write(result);
     // load images so you can spam
     // for (i = 0; i < fucks.fucked_gifs.length; i++) {
@@ -1438,12 +1477,31 @@ new ClipboardJS('.btn_fav', {
     }
     $("#showGifs").click();
     fucks.checkFavs()
+    Vue.nextTick(function (){
+      for (i = 0; i < fucks.fav_gifs.length; i++) {
+        var num=fucks.fav_gifs[i].id+"fav"
+        var testies="#"+num
+        // console.log("testies: "+testies)
+        $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
+        //move popover
+      }
+    })
+
     fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
   }
 </script>
 
 <!-- rons css -->
 <style>
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+.bootstrap-select .btn:focus {
+    outline: none !important;
+}
 .rons-menu {
     width: 100% !important;
     /* height: 400px !important; */
@@ -1501,16 +1559,12 @@ text-rendering: optimizeLegibility;
     margin: 0;
     padding: 0;
   }
-.rons_finger:active {outline:0;}
-  .rons_button:hover{
+  /* .rons_finger:active {outline:0;} */
+  /* .rons_button:active {
     background: #f6f4f1;
     color:#000000;
-  }
-  .rons_button:active {
-    background: #f6f4f1;
-    color:#000000;
-  }
-  .rons_button:focus {outline:0;}
+  } */
+  /* .rons_button:focus {outline:0;} */
 
   .profile_button:focus {outline:0;}
 
