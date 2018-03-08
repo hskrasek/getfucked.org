@@ -2,7 +2,8 @@
 @aaronmclellan
 -->
 <!-- load libraries and frameworks -->
-<link rel="shortcut icon" type="image/png" href="middle_fingers/sketch_black_128x128.png" />
+<link v-if="fucks.current_middle_finger" rel="shortcut icon" type="image/png" :href="fucks.current_middle_finger" />
+<link v-else rel="shortcut icon" type="image/png" href="middle_fingers/zombie_128x128.png" />
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-progressive-image@2.4.4/dist/vue-progressive-image.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -14,7 +15,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
 <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
 <meta name="theme-color" content="#000000">
-<link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" />
+<!-- <link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" /> -->
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no,  user-scalable=0">
@@ -151,8 +152,8 @@
                     <div class="col-3">
                       <div class="dropdown rons-menu">
                         <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
-                          <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
+                          <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
                         </button>
                         <div class="rons-menu">
                           <div class="dropdown-menu">
@@ -181,8 +182,8 @@
                   <div class="col-3">
                     <div class="dropdown rons-menu">
                       <button id="middle_finger_right" type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
-                        <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
                       </button>
                       <div class="rons-menu">
                         <div class="dropdown-menu">
@@ -383,15 +384,6 @@ new ClipboardJS('.btn_fav', {
   // ------------------------
   // vue defs
   // ------------------------
-  //   - one item from each col makes up an insults
-  //   - methods are functions dealing with this dataset
-  //     - getInsult()
-  //       - returns a random word from each col (1,2,3) creating an insult and populating the textarea.
-  //       - will not allow duplicates of an insult
-  //     - getLog()
-  //       - logs values to the console
-  //     - clear()
-  //       -clears insult list --having trouble clearing the count...reading it back from local storage specifically
   var fucks = new Vue({
     el: '#data',
     data: {
@@ -575,8 +567,7 @@ new ClipboardJS('.btn_fav', {
     methods: {
       getRandomGif: function() {
         if(fucks.count>=9 && !fucks.finger_tutorial){
-          $('#middle_finger_left').popover('enable')
-          $('#middle_finger_left').popover('show')
+          this.showFingerPopover()
         }
         // console.log("in get random gif, count")
         $(document).on('focus', ':not(.popover)', function(){
@@ -715,6 +706,9 @@ new ClipboardJS('.btn_fav', {
         window.location.href="mailto:gifs@getfucked.org?subject=new gif for getfucked.org &body=please leave a url ending in .gif or attach the gif. ty  "
       },
       favGif: function(fuck,button_id) {
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
         // show the popover if it's their first fav
         if(!fucks.profile_tutorial){
           this.showProfilePopover()
@@ -803,6 +797,12 @@ new ClipboardJS('.btn_fav', {
 
       },
       copyUrl: function(text_id,button_id) {
+        if(!fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
         var element='#'+text_id
         copyToClipboard(element)
         // console.log("text_id in copy_url: "+text_id)
@@ -837,6 +837,13 @@ new ClipboardJS('.btn_fav', {
        }
       },
       newCopyUrl: function(button_id) {
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
+        // show the popover if it's their first fav
+        if(!fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
         // var copyText = document.getElementById(text_id);
         // copyText.select();
         // document.execCommand("Copy");
@@ -861,6 +868,12 @@ new ClipboardJS('.btn_fav', {
        // }
       },
       showFavGrowl: function(fav, button_id) {
+        if(!fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
         fucks.closeFavs()
         Vue.nextTick(function (){
           // if (fav.includes("inFavFav")){
@@ -899,6 +912,12 @@ new ClipboardJS('.btn_fav', {
         localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
       },
       saveGif: function(div, fav) {
+        if(!fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
         if (div.includes("inFavDownload") ){
           //growl
           // console.log("showing growl sucka:: "+fav.url)
@@ -923,6 +942,9 @@ new ClipboardJS('.btn_fav', {
 
       },
       profileClicked: function() {
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          this.showFingerPopover()
+        }
         // console.log("profile clicked")
         fucks.profile_tutorial=true
         localStorage.profile_tutorial = 1
@@ -930,6 +952,12 @@ new ClipboardJS('.btn_fav', {
         $('#dropdownMenuButton').popover('disable')
       },
       fingerClicked: function() {
+        if(fucks.fav_gifs.length>=1 && !fucks.profile_tutorial){
+          this.showProfilePopover()
+        }
+        // if(fucks.count>=9 && !fucks.finger_tutorial){
+        //   this.showFingerPopover()
+        // }
         // console.log("profile clicked")
         fucks.finger_tutorial=true
         localStorage.finger_tutorial = 1
@@ -954,6 +982,29 @@ new ClipboardJS('.btn_fav', {
         }
         //wtf start here...why is it 214? and more? wtf
         // console.log("loaded: "+fucks.loaded_gifs.length+" : "+fucks.eligible_gifs.length)
+        // localStorage.removeItem("eligible_gifs");
+        // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
+        // console.log("saved...ready for clicks")
+      },
+      reload_eligible_lists: function() {
+        console.log("in reload eligible lists")
+        //look through fucked gifs
+        for (var s=0; s < fucks.fucked_gifs.length; s++) {
+          //see fucked_gifs[s] is already in our fucks_list
+          var already_in_list=false
+          for (b = 0; b < fucks.fav_gifs.length; b++) {
+            if(fucks.fav_gifs[b].url==fuck.url){
+              console.log("already in our fucked gifs")
+              already_in_list=true
+            }
+          }
+          if(!already_in_list){
+            fucks.loaded_gifs.push(fucks.fucked_gifs[s])
+            fucks.eligible_gifs.push(fucks.fucked_gifs[s])
+          }
+        }
+        //wtf start here...why is it 214? and more? wtf
+        console.log("loaded: "+fucks.loaded_gifs.length+" : "+fucks.eligible_gifs.length)
         // localStorage.removeItem("eligible_gifs");
         // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
         // console.log("saved...ready for clicks")
@@ -1046,12 +1097,26 @@ new ClipboardJS('.btn_fav', {
         document.getElementById("clear_selected").disabled = true;
         clear_buttons_count = 0
       },
+      showFingerPopover: function(){
+        Vue.nextTick(function (){
+          // console.log("sleeping...")
+          // sleep(100);
+          $('#middle_finger_left').popover('enable')
+          $('#middle_finger_left').popover('show')
+        })
+      },
       showProfilePopover: function(){
         Vue.nextTick(function (){
           // console.log("sleeping...")
           // sleep(100);
           $('#dropdownMenuButton').popover('show')
         })
+      },
+      setCurrentMiddleFinger: function(){
+        var randomFinger=Math.floor(Math.random() * 2)
+        console.log("random current finger num: "+randomFinger)
+        fucks.current_middle_finger=fucks.middle_fingers[randomFinger].path
+        localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
       },
       checkFavs: function(){
         Vue.nextTick(function (){
@@ -1071,8 +1136,7 @@ new ClipboardJS('.btn_fav', {
         localStorage.removeItem("tutorial");
         localStorage.removeItem("current_middle_finger");
         fucks.current_middle_finger=""
-        fucks.current_middle_finger=fucks.middle_fingers[0].path
-        localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
+        fucks.setCurrentMiddleFinger()
 
         localStorage.removeItem("profile_tutorial");
         localStorage.removeItem("finger_tutorial");
@@ -1267,7 +1331,7 @@ new ClipboardJS('.btn_fav', {
     //   }
     // }
     //first load fucked_gifs full of shit for us to use
-    var loadAll=false
+    var loadAll=true
     if (!localStorage.eligible_gifs) {
       localStorage.eligible_gifs = [];
       loadAll=true
@@ -1308,12 +1372,15 @@ new ClipboardJS('.btn_fav', {
       $('#insultMePls').popover('disable')
     }
     if(!localStorage.current_middle_finger){
-      console.log("middle fingers 0")
-      console.log(fucks.middle_fingers[0])
-      fucks.current_middle_finger=fucks.middle_fingers[0].path
-      console.log("current middle finger: ")
-      console.log(fucks.current_middle_finger)
-      localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
+      fucks.setCurrentMiddleFinger()
+      // var randomFinger=Math.floor(Math.random() * 2)
+      // console.log("random current finger num: "+randomFinger)
+      // console.log("middle fingers 0")
+      // console.log(fucks.middle_fingers[0])
+      // fucks.current_middle_finger=fucks.middle_fingers[0].path
+      // console.log("current middle finger: ")
+      // console.log(fucks.current_middle_finger)
+      // localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
       // console.log("current_eligible_gifs size: "+fucks.current_eligible_gifs.length)
     }
     else{
@@ -1539,7 +1606,12 @@ new ClipboardJS('.btn_fav', {
         //move popover
       }
     })
-
+    if(fucks.count>=9 && !fucks.finger_tutorial){
+      fucks.showFingerPopover()
+    }
+    if(fucks.fav_gifs.length>=1 && !fucks.profile_tutorial){
+      fucks.showProfilePopover()
+    }
     fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
   }
 </script>
