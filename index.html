@@ -21,21 +21,21 @@
   <meta name="Description" content="click to get random gifs. star your favs for later, download or copy a url to share. everything will be saved when you come back">
   <meta name="Keywords" content="getfucked, getfucked.org, get fucked gifs, funny">
   <meta name="Author" content="ron">
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43308018-5"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43308018-3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'UA-43308018-5');
+    gtag('config', 'UA-43308018-3');
   </script>
+
   <title>fucked</title>
 </head>
-<div class="h-100 main_content col-md-5 offset-md-3" id="data">
+<body>
+<!-- <div class="container" id="data"> -->
+  <div class="h-100 w-100 col-md-5 offset-md-3" id="data">
     <!-- <div class="dropdown show">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Dropdown link
@@ -65,11 +65,11 @@
               <hr>
               <!-- profile dropdown button-->
               <div class="dropdown dropdown-pull-right show" id="profile_dropdown">
-                <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" title="favs" data-content="see your favs here">
+                <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="see your favs here">
                 <i class="fas fa-user-circle" style="font-size: 45px;"></i><span v-if="fav_gifs.length>0" class="badge badge-pill badge-dark">{{fav_gifs.length}}</span>
                 </button>
               <!-- body of dropdown -->
-                  <div class="dropdown-menu dropdown-menu-right" style="width: 400% !important;" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu dropdown-menu-right" style="width: 400px !important;" aria-labelledby="dropdownMenuButton">
                     <div class="col fav mostly-customized-scrollbar">
                       <br>
                       <!-- <div class="form-row align-items-center"> -->
@@ -101,13 +101,13 @@
                             <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
                             <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
                             <span class="float-right" >
-                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavDownload'" v-on:click="saveGif(fav.id+'inFavDownload')" data-toggle="popover" data-placement="bottom" title="downloading...">
+                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavDownload'" v-on:click="saveGif(fav.id+'inFavDownload', fav)" data-toggle="popover" data-placement="bottom" title="downloading..." :data-content="fav.description">
                                 <a :download="fav.description" :href="fav.local_url" title="ImageName">
                                     <i class="far fa-save" style="font-size:20px"></i>
                                 </a>
                               </button>
                               |
-                              <button class="btn btn-light" :data-clipboard-text="fav.url" role="button" :id="fav.id+'favCopy'" v-on:click="showFavGrowl(fav)" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
+                              <button class="btn btn-light" :data-clipboard-text="fav.url" role="button" :id="fav.id+'favCopy'" v-on:click="showFavGrowl(fav, fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
                               <i class="far fa-copy" style="font-size:20px"></i>
                               </button>
                               <!-- <button class="btn_fav btn-light" role="button" :data-clipboard-text="fav.url" :id="fav.id+'favCopy'" v-on:click="newCopyUrl(fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
@@ -141,7 +141,7 @@
                   <!-- </div> -->
                 <!-- </div> -->
               </div>
-              <div class="container">
+              <!-- <div class="container"> -->
                 <!-- <div class="container"> -->
                 <!-- here, adding the other fingers and shit -->
                 <h2>
@@ -150,7 +150,7 @@
                     <!-- left side -->
                     <div class="col-3">
                       <div class="dropdown rons-menu">
-                        <button type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
                           <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
                           <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
                         </button>
@@ -180,7 +180,7 @@
                   </div>
                   <div class="col-3">
                     <div class="dropdown rons-menu">
-                      <button type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                      <button id="middle_finger_right" type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
                         <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
                       </button>
@@ -201,7 +201,6 @@
                 <center>total gifs: {{fucked_gifs.length}} | your gifs: {{count}}</center>
                 <hr style="padding:0; margin:0;">
               <!-- </div> -->
-
               <!-- <hr> -->
               <transition name="fade">
               <div v-if="all_gifs_loaded" ></div>
@@ -222,7 +221,7 @@
                 <img :src="fuck.url" :id="fuck" width=100% v-cloak>
                 <input type="text" :value="fuck.url" :id="fuck.id+'copyText'" style="position: absolute;left: -9999px;">
                 <span class="float-right">
-                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+'download'" v-on:click="saveGif(fuck.id+'download')" data-toggle="popover" data-placement="bottom" title="downloading...">
+                  <button type="button" role="button" class="btn btn-light" :id="fuck.id+'download'" v-on:click="saveGif(fuck.id+'download', fuck)" data-toggle="popover" data-placement="bottom" title="downloading..." :data-content="fuck.description">
                     <a :download="fuck.description" :href="fuck.local_url" title="ImageName">
                         <i class="far fa-save" style="font-size:20px"></i>
                     </a>
@@ -253,14 +252,14 @@
             <hr>
             <div class="row">
               <div class="col-8">
-                <button v-if="!current_middle_finger" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img src="middle_fingers/zombie_128x128.png" width="8%"/></button>
+                <button v-if="!current_middle_finger" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img src="middle_fingers/zombie_128x128.png" width="8%"/></button>
                 <button v-else-if="fucks_list.length==fucked_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back" disabled>&nbsp;<img :src="current_middle_finger+'.gif'" width="8%"/>you got em all<img :src="current_middle_finger+'.gif'" width="8%"/></button>
-                <button v-else-if="all_gifs_loaded && fucks_list.length!=fucked_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
+                <button v-else-if="all_gifs_loaded && fucks_list.length!=fucked_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
                 <button v-else-if="current_count>=loaded_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back" disabled>&nbsp;<img :src="current_middle_finger+'.gif'" width="8%"/>loading...<img :src="current_middle_finger+'.gif'" width="8%"/></button>
-                <button v-else type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
+                <button v-else type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
               </div>
               <!-- <div class="col-8">
-              <button type="button" id="insultMePls" class="btn-dark btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random fucked gifs" data-content="star your favs for later,download or copy a url to share" disabled><img src="loading1.gif" width="10%"/></button>
+              <button type="button" id="insultMePls" class="btn-dark btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later,download or copy a url to share" disabled><img src="loading1.gif" width="10%"/></button>
               </div> -->
               <!--
               *****************
@@ -320,6 +319,10 @@
                         <button type="button" class="btn rons_button btn-lg btn-block" v-on:click="clear_specific" id="clear_selected" style="font-size: 25px;" data-dismiss="modal" disabled>clear selected</button>
                       </div>
                       <div class="col" style="margin-bottom: 5%;">
+                        <!-- trying to add a popover to disabled clear buttons? -->
+                        <!-- <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
+                          <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
+                        </span> -->
                         <button v-if="!all_gifs_loaded" type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal" disabled>clear all</button>
                         <button v-else type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal">clear all</button>
                       </div>
@@ -333,7 +336,10 @@
                 </div>
               </div><!-- end clear dropup -->
             </div><!-- end get fucked and clear buttons -->
+
           </div><!-- end main content -->
+          <!-- </div> -->
+        </body>
 <!-- javascript -->
 <script>
 // import Vue from 'vue'
@@ -391,6 +397,7 @@ new ClipboardJS('.btn_fav', {
     data: {
       count: 0,
       profile_tutorial: false,
+      finger_tutorial: false,
       current_count: 0,
       show: false,
       gifs_left: 0,
@@ -567,8 +574,10 @@ new ClipboardJS('.btn_fav', {
     },
     methods: {
       getRandomGif: function() {
-
-
+        if(fucks.count>=9 && !fucks.finger_tutorial){
+          $('#middle_finger_left').popover('enable')
+          $('#middle_finger_left').popover('show')
+        }
         // console.log("in get random gif, count")
         $(document).on('focus', ':not(.popover)', function(){
             $('.popover').popover('hide');
@@ -744,6 +753,7 @@ new ClipboardJS('.btn_fav', {
           // $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
         }
         else{
+          console.log("removing fav")
           var rons_index=0
           for (i = 0; i < fucks.fav_gifs.length; i++) {
             if(fucks.fav_gifs[i].url==fuck.url){
@@ -774,7 +784,7 @@ new ClipboardJS('.btn_fav', {
           $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
         }
         Vue.nextTick(function (){
-          if (button_id.includes("inFavFav") && fucks.fav_gifs.length==0){
+          if (button_id.includes("inFavFav") && fucks.fav_gifs.length!=0){
             fucks.closeFavs()
           }
           //check the favs in their new positions...well uncheck them first, then recheck
@@ -850,13 +860,28 @@ new ClipboardJS('.btn_fav', {
        //     window.getSelection().removeAllRanges();
        // }
       },
-      showFavGrowl: function(fav) {
-        console.log("showing growl sucka:: "+fav.url)
-        var message='copied: '+fav.description+'<br><hr>'+fav.url
-        $.bootstrapGrowl(message, {
-                  type: 'success',
-                  delay: 1000,
-                });
+      showFavGrowl: function(fav, button_id) {
+        fucks.closeFavs()
+        Vue.nextTick(function (){
+          // if (fav.includes("inFavFav")){
+          var testies1='#'+button_id
+          console.log("in new copy: "+testies1)
+          $(testies1).popover('enable')
+          $(testies1).popover('show')
+          // hide copied message
+          $(testies1).on('shown.bs.popover', function() {
+            setTimeout(function() {
+                $(testies1).popover('hide');
+            }, 500);
+          });
+          // }
+        })
+        // console.log("showing growl sucka:: "+fav.url)
+        // var message='copied: '+fav.description+'<br><hr>'+fav.url
+        // $.bootstrapGrowl(message, {
+        //           type: 'success',
+        //           delay: 1000,
+        //         });
       },
       closeFavs: function() {
         // console.log('inClosedFavs')
@@ -873,16 +898,29 @@ new ClipboardJS('.btn_fav', {
         fucks.current_middle_finger=fucks.middle_fingers[new_id-1].path
         localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
       },
-      saveGif: function(div) {
-        var testies='#'+div
-        $(testies).popover('enable')
-        $(testies).popover('show')
-        // hide copied message
-        $(testies).on('shown.bs.popover', function() {
-          setTimeout(function() {
-              $(testies).popover('hide');
-          }, 500);
-        });
+      saveGif: function(div, fav) {
+        if (div.includes("inFavDownload") ){
+          //growl
+          // console.log("showing growl sucka:: "+fav.url)
+          // var message='downloading: '+fav.description+'<br><hr>'+fav.url
+          // $.bootstrapGrowl(message, {
+          //           type: 'success',
+          //           delay: 1000,
+          //         });
+          fucks.closeFavs()
+        }
+        Vue.nextTick(function (){
+          var testies='#'+div
+          $(testies).popover('enable')
+          $(testies).popover('show')
+          // hide copied message
+          $(testies).on('shown.bs.popover', function() {
+            setTimeout(function() {
+                $(testies).popover('hide');
+            }, 1500);
+          });
+        })
+
       },
       profileClicked: function() {
         // console.log("profile clicked")
@@ -890,6 +928,13 @@ new ClipboardJS('.btn_fav', {
         localStorage.profile_tutorial = 1
         $('#dropdownMenuButton').popover('hide')
         $('#dropdownMenuButton').popover('disable')
+      },
+      fingerClicked: function() {
+        // console.log("profile clicked")
+        fucks.finger_tutorial=true
+        localStorage.finger_tutorial = 1
+        $('#middle_finger_left').popover('hide')
+        $('#middle_finger_left').popover('disable')
       },
       saveProfile: function() {
         localStorage.profileName = fucks.profileName
@@ -1030,8 +1075,10 @@ new ClipboardJS('.btn_fav', {
         localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
 
         localStorage.removeItem("profile_tutorial");
+        localStorage.removeItem("finger_tutorial");
         localStorage.removeItem("times_completed")
         fucks.profile_tutorial=false
+        fucks.finger_tutorial=false
 
         fucks.times_completed=0
         $('#insultMePls').popover('enable')
@@ -1243,6 +1290,12 @@ new ClipboardJS('.btn_fav', {
     if (localStorage.profile_tutorial) {
       $('#dropdownMenuButton').popover('hide')
       $('#dropdownMenuButton').popover('disable')
+    }
+    if (localStorage.finger_tutorial) {
+      console.log("disabling the finger")
+      $('#middle_finger_left').popover('hide')
+      $('#middle_finger_left').popover('disable')
+      fucks.finger_tutorial=true
     }
     if (!localStorage.tutorial) {
       // console.log("noTutorial")
