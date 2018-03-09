@@ -561,7 +561,23 @@ new ClipboardJS('.btn_fav', {
 { id: 104, url: 'http://i.imgur.com/M6BZlpj.gif', description: 'donald glover (god) out of fucks', local_url: 'gifs/104.gif' },
 { id: 105, url: 'http://i.imgur.com/tRKM2x2.gif', description: 'shaun get fucked', local_url: 'gifs/105.gif' },
 { id: 106, url: 'http://i.imgur.com/X106sQT.gif', description: 'tremors fuck u haha', local_url: 'gifs/106.gif' },
-{ id: 107, url: 'http://i.imgur.com/AWIJKXR.gif', description: 'entourage or some shit?', local_url: 'gifs/107.gif' }
+{ id: 107, url: 'http://i.imgur.com/AWIJKXR.gif', description: 'entourage or some shit?', local_url: 'gifs/107.gif' },
+{ id: 108, url: 'https://i.imgur.com/dUlo3Vv.gif', description: 'dirty finger', local_url: 'gifs/108.gif' },
+{ id: 109, url: 'https://i.imgur.com/t1a6PCV.gif', description: 'fry take my money finger', local_url: 'gifs/109.gif' },
+{ id: 110, url: 'https://i.imgur.com/Q0pfLhD.gif', description: 'kid glocked and loaded', local_url: 'gifs/110.gif' },
+{ id: 111, url: 'https://i.imgur.com/GkG8i6J.gif', description: 'magic trick finger', local_url: 'gifs/111.gif' },
+{ id: 112, url: 'https://i.imgur.com/0WBq5Up.gif', description: 'colbert wind up', local_url: 'gifs/112.gif' },
+{ id: 113, url: 'https://i.imgur.com/50RtgDz.gif', description: 'waymond churro finger', local_url: 'gifs/113.gif' },
+{ id: 114, url: 'https://i.imgur.com/Qzi63Ys.gif', description: 'jim trumpet finger', local_url: 'gifs/114.gif' },
+{ id: 115, url: 'https://i.imgur.com/KjuqJsg.gif', description: 'jesus finger', local_url: 'gifs/115.gif' },
+{ id: 116, url: 'https://i.imgur.com/h5k7ffz.gif', description: 'channing eyebrow rub', local_url: 'gifs/116.gif' },
+{ id: 117, url: 'https://i.imgur.com/nRLmWS6.gif', description: 'willy casual finger', local_url: 'gifs/117.gif' },
+{ id: 118, url: 'https://i.imgur.com/rhymOVk.gif', description: 'baby dont give a fuck', local_url: 'gifs/118.gif' },
+{ id: 119, url: 'https://i.imgur.com/XLn0TZc.gif', description: 'cumberbatch double', local_url: 'gifs/119.gif' },
+{ id: 120, url: 'https://i.imgur.com/HnGfBnX.gif', description: 'bey (queen)', local_url: 'gifs/120.gif' },
+{ id: 121, url: 'https://i.imgur.com/TFFx0es.gif', description: 'rogen double ft grin', local_url: 'gifs/121.gif' },
+{ id: 122, url: 'https://i.imgur.com/M84PZ2D.gif', description: 'sasha bow finger', local_url: 'gifs/122.gif' },
+{ id: 123, url: 'https://i.imgur.com/XDJy1xg.gif', description: 'chucky finger', local_url: 'gifs/123.gif' },
       ]
     },
     methods: {
@@ -1132,6 +1148,9 @@ new ClipboardJS('.btn_fav', {
           }
         })
       },
+      //****************
+      //**** clear *****
+      //****************
       clear: function() {
         localStorage.removeItem("tutorial");
         localStorage.removeItem("current_middle_finger");
@@ -1157,14 +1176,15 @@ new ClipboardJS('.btn_fav', {
         localStorage.removeItem("badge_list");
         localStorage.removeItem("eligible_gifs");
         localStorage.removeItem("loaded_gifs");
+        fucks.eligible_gifs = []
+        fucks.loaded_gifs = []
         localStorage.removeItem("all_gifs_loaded");
         fucks.count = 0;
         fucks.current_count = 0;
         localStorage.clickcount = 0;
         fucks.fucks_list = []
         fucks.fav_gifs = []
-        fucks.eligible_gifs = []
-        fucks.loaded_gifs = []
+
         fucks.profileName = ''
         fucks.profileBio = ''
         fucks.gifs_left=fucks.fucked_gifs.length-fucks.count
@@ -1618,7 +1638,8 @@ new ClipboardJS('.btn_fav', {
 
 <!-- rons css -->
 <style>
-.form-control:focus {
+.bootstrap-select .btn:focus{outline:none!important;}
+.dropdown:focus {
     border-color: #66afe9;
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
@@ -1694,6 +1715,10 @@ text-rendering: optimizeLegibility;
   .profile_button:focus {outline:0;}
 
   button:focus {outline:0;}
+  .btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}
   .main_content{
     max-height: 100%; !important
     min-height: 100%; !important
