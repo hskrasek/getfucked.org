@@ -4,7 +4,8 @@
 <!-- load libraries and frameworks -->
 <link v-if="fucks.current_middle_finger" rel="shortcut icon" type="image/png" :href="fucks.current_middle_finger" />
 <link v-else rel="shortcut icon" type="image/png" href="middle_fingers/sketch_black_128x128.png" />
-<script src="https://unpkg.com/vue"></script>
+<!-- <script src="https://unpkg.com/vue"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-progressive-image@2.4.4/dist/vue-progressive-image.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -36,7 +37,7 @@
 </head>
 <body>
 <!-- <div class="container" id="data"> -->
-  <div class="h-100 w-100 col-md-5 offset-md-3" id="data">
+  <div class="h-100 w-100 col-lg-5 offset-lg-3" id="data">
     <!-- <div class="dropdown show">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Dropdown link
@@ -63,7 +64,7 @@
           <!-- <div class="col"> -->
             <center>
               <!-- Trigger -->
-              <hr>
+              <hr style="padding:0; margin:0;">
               <!-- profile dropdown button-->
               <div class="dropdown dropdown-pull-right show" id="profile_dropdown">
                 <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="see your favs here">
@@ -199,11 +200,11 @@
                   </div>
                 </h2>
                 <hr style="padding:0; margin:0;">
-                <center>total gifs: {{fucked_gifs.length}} | your gifs: {{count}}</center>
+                <center>total gifs: {{fucked_gifs.length}} | <span v-if="!all_gifs_loaded">loaded gifs: {{loaded_gifs.length}} |</span> your gifs: {{count}}</center>
                 <hr style="padding:0; margin:0;">
               <!-- </div> -->
               <!-- <hr> -->
-              <transition name="fade">
+              <!-- <transition name="fade">
               <div v-if="all_gifs_loaded" ></div>
               <div v-else-if="loaded_gifs.length>35" class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">loading gifs...{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
@@ -211,7 +212,7 @@
               <div v-else class="progress">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
               </div>
-              </transition>
+              </transition> -->
               <!-- <img src="http://i.imgur.com/YyDq4OX.gif" alt = "" :id="fuck" width=100%> -->
             </center>
             <!-- insults -->
@@ -324,7 +325,7 @@
                         <!-- <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
                           <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
                         </span> -->
-                        <button v-if="!all_gifs_loaded" type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal" disabled>clear all</button>
+                        <button v-if="!all_gifs_loaded" type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal" disabled>gifs loading...</button>
                         <button v-else type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal">clear all</button>
                       </div>
                     </div>
@@ -726,7 +727,9 @@ new ClipboardJS('.btn_fav', {
           this.showFingerPopover()
         }
         // show the popover if it's their first fav
+        console.log("profile tutorial in favGif: "+fucks.profile_tutorial)
         if(!fucks.profile_tutorial){
+          console.log("showing profile popover")
           this.showProfilePopover()
         }
         //hide popover
@@ -958,19 +961,26 @@ new ClipboardJS('.btn_fav', {
 
       },
       profileClicked: function() {
-        if(fucks.count>=9 && !fucks.finger_tutorial){
-          this.showFingerPopover()
+        console.log("profile clicked...fav_gifs length: "+fucks.fav_gifs.length)
+        console.log("profile clicked...profile_tutorial: "+fucks.profile_tutorial)
+        if(fucks.fav_gifs.length>=1 && !fucks.profile_tutorial){
+          console.log("profile clicked...profile_tutorial: "+fucks.profile_tutorial)
+          this.showProfilePopover()
+          fucks.profile_tutorial=true
+          localStorage.profile_tutorial = 1
         }
-        // console.log("profile clicked")
-        fucks.profile_tutorial=true
-        localStorage.profile_tutorial = 1
         $('#dropdownMenuButton').popover('hide')
         $('#dropdownMenuButton').popover('disable')
       },
       fingerClicked: function() {
-        if(fucks.fav_gifs.length>=1 && !fucks.profile_tutorial){
-          this.showProfilePopover()
-        }
+        // if(fucks.count>=9 && !fucks.finger_tutorial){
+        //   this.showFingerPopover()
+        //   fucks.finger_tutorial=true
+        //   localStorage.finger_tutorial = 1
+        // }
+        // if(fucks.fav_gifs.length>=1 && !fucks.finger_tutorial){
+        //   this.showProfilePopover()
+        // }
         // if(fucks.count>=9 && !fucks.finger_tutorial){
         //   this.showFingerPopover()
         // }
@@ -1123,8 +1133,9 @@ new ClipboardJS('.btn_fav', {
       },
       showProfilePopover: function(){
         Vue.nextTick(function (){
-          // console.log("sleeping...")
+          console.log("showing popover...")
           // sleep(100);
+          $('#dropdownMenuButton').popover('enable')
           $('#dropdownMenuButton').popover('show')
         })
       },
@@ -1524,9 +1535,9 @@ new ClipboardJS('.btn_fav', {
         }
         fucks.all_gifs_loaded=true
       }
-      if(fucks.loaded_gifs.length>0 && fucks.fucked_gifs.length>0){
-        document.getElementById("progressBar").style.width = fucks.loaded_gifs.length / fucks.fucked_gifs.length * 100 + "%";
-      }
+      // if(fucks.loaded_gifs.length>0 && fucks.fucked_gifs.length>0){
+      //   document.getElementById("progressBar").style.width = fucks.loaded_gifs.length / fucks.fucked_gifs.length * 100 + "%";
+      // }
       // console.log("loaded gifs count: "+fucks.loaded_gifs.length)
     }
     // console.log("fucked gifs count: "+fucks.fucked_gifs.length)
