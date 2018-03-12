@@ -67,7 +67,8 @@
           <!-- <div class="col"> -->
             <center>
               <!-- Trigger -->
-              <hr style="padding:0; margin:0;">
+              <!-- <hr style="padding:5; margin:5;"> -->
+              <hr>
               <!-- profile dropdown button-->
               <div class="dropdown dropdown-pull-right show" id="profile_dropdown">
                 <button v-on:click="profileClicked()" class="btn dropdown-toggle rons_button profile-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="see your favs here">
@@ -155,7 +156,13 @@
                     <!-- left side -->
                     <div class="col-3">
                       <div class="dropdown rons-menu">
-                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-none d-lg-block" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                          <!-- lg down 125% -->
+                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
+                          <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                        </button>
+                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                          <!-- lg up 100% -->
                           <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
                           <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
                         </button>
@@ -163,7 +170,7 @@
                           <div class="dropdown-menu">
                             <div v-for="finger in middle_fingers" v-cloak>
                               <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
-                                <img :src="finger.path+'.png'" width="50%">
+                                <img :src="finger.path+'.png'" width="75%">
                               </button>
 
                             <!-- <button type="button" class="btn">
@@ -177,15 +184,25 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="profileName" class="col-6" style="padding:0; margin:0;">
+                  <div v-if="profileName" class="col-6 fuct_header" style="padding:0; margin:0;">
                     get fucked, {{profileName}}
                   </div>
-                  <div v-else class="col-6" style="padding:0; margin:0;">
+                  <div v-else class="col-6 fuct_header" style="padding:0; margin:0;">
                     get fucked
                   </div>
                   <div class="col-3">
                     <div class="dropdown rons-menu">
-                      <button id="middle_finger_right" type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                      <!-- <button id="middle_finger_right" type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="125%">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="125%">
+                      </button> -->
+                      <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-none d-lg-block" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                        <!-- lg down 125% -->
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                      </button>
+                      <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                        <!-- lg up 100% -->
                         <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
                         <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
                       </button>
@@ -193,7 +210,7 @@
                         <div class="dropdown-menu">
                           <div v-for="finger in middle_fingers" v-cloak>
                             <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
-                              <img :src="finger.path+'.png'" width="50%">
+                              <img :src="finger.path+'.png'" width="75%">
                             </button>
                           </div>
                         </div>
@@ -1653,6 +1670,14 @@ new ClipboardJS('.btn_fav', {
 
 <!-- rons css -->
 <style>
+.fuct_header {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */
+}
 .bootstrap-select .btn:focus{outline:none!important;}
 .dropdown:focus {
     border-color: #66afe9;
