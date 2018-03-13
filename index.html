@@ -156,16 +156,18 @@
                     <!-- left side -->
                     <div class="col-3">
                       <div class="dropdown rons-menu">
-                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-none d-lg-block" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
                           <!-- lg down 125% -->
-                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
-                          <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%" class="d-none d-lg-block">
+                          <img v-else src="middle_fingers/zombie_128x128.png" width="100%" class="d-none d-lg-block">
+
+                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%" class="d-lg-none">
+                          <img v-else src="middle_fingers/zombie_128x128.png" width="150%" class="d-lg-none">
                         </button>
-                        <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                          <!-- lg up 100% -->
+                        <!-- <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
                           <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
                           <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
-                        </button>
+                        </button> -->
                         <div class="rons-menu">
                           <div class="dropdown-menu">
                             <div v-for="finger in middle_fingers" v-cloak>
@@ -192,30 +194,35 @@
                   </div>
                   <div class="col-3">
                     <div class="dropdown rons-menu">
-                      <!-- <button id="middle_finger_right" type="button" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="125%">
-                        <img v-else src="middle_fingers/zombie_128x128.png" width="125%">
-                      </button> -->
-                      <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-none d-lg-block" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
+                      <button id="middle_finger_right" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
                         <!-- lg down 125% -->
-                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%">
-                        <img v-else src="middle_fingers/zombie_128x128.png" width="100%">
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%" class="d-none d-lg-block">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="100%" class="d-none d-lg-block">
+
+                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%" class="d-lg-none">
+                        <img v-else src="middle_fingers/zombie_128x128.png" width="150%" class="d-lg-none">
                       </button>
-                      <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                        <!-- lg up 100% -->
+                      <!-- <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
                         <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
                         <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
-                      </button>
+                      </button> -->
                       <div class="rons-menu">
                         <div class="dropdown-menu">
                           <div v-for="finger in middle_fingers" v-cloak>
                             <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
                               <img :src="finger.path+'.png'" width="75%">
                             </button>
-                          </div>
+
+                          <!-- <button type="button" class="btn">
+                            <img src="middle_fingers/simple_black_128x128.png" width="50%">
+                          </button>
+                          <button type="button" class="btn">
+                            <img src="middle_fingers/zombie_128x128.png" width="50%">
+                          </button> -->
                         </div>
                       </div>
                     </div>
+                  </div>
                   </div>
                   </div>
                 </h2>
@@ -476,113 +483,113 @@ new ClipboardJS('.btn_fav', {
         }
       ],
       fucked_gifs: [
-        { id: 1, url: 'http://i.imgur.com/rGVUFGh.gif', description: 'disney go fuck yourself', local_url: 'gifs/1.gif' },
-{ id: 2, url: 'http://i.imgur.com/cBn1gZB.gif', description: 'crasy arm man go fuck yourself', local_url: 'gifs/2.gif' },
-{ id: 3, url: 'http://i.imgur.com/oBC7bLr.gif', description: 'gamecube fuck yourself', local_url: 'gifs/3.gif' },
-{ id: 4, url: 'http://i.imgur.com/L7Hkee6.gif', description: 'irredeemable fuckwit', local_url: 'gifs/4.gif' },
-{ id: 5, url: 'http://i.imgur.com/ZdGQWTH.gif', description: 'almost gave a fuck', local_url: 'gifs/5.gif' },
-{ id: 6, url: 'http://i.imgur.com/JOmfUor.gif', description: 'seal almost gave a fuck', local_url: 'gifs/6.gif' },
-{ id: 7, url: 'http://i.imgur.com/vRMR4pG.gif', description: 'middle finger greeting card', local_url: 'gifs/7.gif' },
-{ id: 8, url: 'http://i.imgur.com/SvykPoC.gif', description: 'middle finger thru the face', local_url: 'gifs/8.gif' },
-{ id: 9, url: 'http://i.imgur.com/G8KWYcZ.gif', description: 'scool bus bird', local_url: 'gifs/9.gif' },
-{ id: 10, url: 'http://i.imgur.com/0IRT9E2.gif', description: 'mr bean flippin it', local_url: 'gifs/10.gif' },
-{ id: 11, url: 'http://i.imgur.com/7utOqMN.gif', description: 'homer no fucks', local_url: 'gifs/11.gif' },
-{ id: 12, url: 'http://i.imgur.com/H5gTBvE.gif', description: 'aquaman fuck you', local_url: 'gifs/12.gif' },
-{ id: 13, url: 'http://i.imgur.com/mgVwGTD.gif', description: 'fuck you!', local_url: 'gifs/13.gif' },
-{ id: 14, url: 'http://i.imgur.com/TSHU3fE.gif', description: 'infinite birds', local_url: 'gifs/14.gif' },
-{ id: 15, url: 'http://i.imgur.com/Vbd00Ry.gif', description: 'disney go fuck yourself with a cactus', local_url: 'gifs/15.gif' },
-{ id: 16, url: 'http://i.imgur.com/oo7gwZJ.gif', description: 'departed maybe go fuck yourself', local_url: 'gifs/16.gif' },
-{ id: 17, url: 'http://i.imgur.com/7OEpoxD.gif', description: 'ninja flip', local_url: 'gifs/17.gif' },
-{ id: 18, url: 'http://i.imgur.com/IS8g6YD.gif', description: 'dinklage fuck u', local_url: 'gifs/18.gif' },
-{ id: 19, url: 'http://i.imgur.com/YyDq4OX.gif', description: 'mr rogers flippin', local_url: 'gifs/19.gif' },
-{ id: 20, url: 'http://i.imgur.com/i2Wou.jpg', description: 'colin mochrie middle finger', local_url: 'gifs/20.gif' },
-{ id: 21, url: 'http://i.imgur.com/ElURxUe.jpg', description: 'misfits fuck u', local_url: 'gifs/21.gif' },
-{ id: 22, url: 'http://i.imgur.com/2I0afpV.jpg', description: 'fingered in a wheelchair :(', local_url: 'gifs/22.gif' },
-{ id: 23, url: 'http://i.imgur.com/8P72l5F.jpg', description: 'dobby (rip) poof fuck you', local_url: 'gifs/23.gif' },
-{ id: 24, url: 'http://i.imgur.com/z9RQ3Ik.gif', description: 'sneaky dinner kid middle finger', local_url: 'gifs/24.gif' },
-{ id: 25, url: 'http://i.imgur.com/YqmYoka.gif', description: 'grannies flippin that bird', local_url: 'gifs/25.gif' },
-{ id: 26, url: 'http://i.imgur.com/c4CZuoC.gif', description: 'queen double bird', local_url: 'gifs/26.gif' },
-{ id: 27, url: 'http://i.imgur.com/NertoPx.gif', description: 'surprise quad flip', local_url: 'gifs/27.gif' },
-{ id: 28, url: 'http://i.imgur.com/27yYLyv.gif', description: 'that turtle franklin fuck you', local_url: 'gifs/28.gif' },
-{ id: 29, url: 'http://i.imgur.com/2UMXDvF.gif', description: 'woody fuck u', local_url: 'gifs/29.gif' },
-{ id: 30, url: 'http://i.imgur.com/GR1pElY.gif', description: 'scrolling go fuck yourself', local_url: 'gifs/30.gif' },
-{ id: 31, url: 'http://i.imgur.com/Vk9HYNz.gif', description: 'bouncy fuck you', local_url: 'gifs/31.gif' },
-{ id: 32, url: 'http://i.imgur.com/GCTedks.gif', description: 'dunst double bird', local_url: 'gifs/32.gif' },
-{ id: 33, url: 'http://i.imgur.com/vKS6Gac.gif', description: 'ryan stiles finds a fuck', local_url: 'gifs/33.gif' },
-{ id: 34, url: 'http://i.imgur.com/a5zSwVa.gif', description: 'jack bird', local_url: 'gifs/34.gif' },
-{ id: 35, url: 'http://i.imgur.com/zOcyC0u.jpg', description: 'powers pumpin bird', local_url: 'gifs/35.gif' },
-{ id: 36, url: 'http://i.imgur.com/Yv9NV.gif', description: 'boba fett wind up bird', local_url: 'gifs/36.gif' },
-{ id: 37, url: 'http://i.imgur.com/fMth417.gif', description: 'chevy finger', local_url: 'gifs/37.gif' },
-{ id: 38, url: 'http://i.imgur.com/Jb6n1Ua.gif', description: 'queen quad flip', local_url: 'gifs/38.gif' },
-{ id: 39, url: 'http://i.imgur.com/GBdLcr3.gif', description: 'not quite hollywod crazy fingers?', local_url: 'gifs/39.gif' },
-{ id: 40, url: 'http://i.imgur.com/Vwrp0J4.gif', description: 'amy poehler double finger', local_url: 'gifs/40.gif' },
-{ id: 41, url: 'http://i.imgur.com/20Cl6r9.gif', description: 'em 8 mile no fucks', local_url: 'gifs/41.gif' },
-{ id: 42, url: 'http://i.imgur.com/QT2k4Ed.gif', description: 'kristin bell ft. middle finger', local_url: 'gifs/42.gif' },
-{ id: 43, url: 'http://i.imgur.com/NWrIhea.gif', description: 'david brent finger', local_url: 'gifs/43.gif' },
-{ id: 44, url: 'http://i.imgur.com/VKx9XE7.gif', description: 'sudeikis show', local_url: 'gifs/44.gif' },
-{ id: 45, url: 'http://i.imgur.com/Qt7Qk0s.gif', description: 'gillian jacobs up urs', local_url: 'gifs/45.gif' },
-{ id: 46, url: 'http://i.imgur.com/78LM3vD.gif', description: 'girl car window flip', local_url: 'gifs/46.gif' },
-{ id: 47, url: 'http://i.imgur.com/7EQS5Og.gif', description: 'walter white bird', local_url: 'gifs/47.gif' },
-{ id: 48, url: 'http://i.imgur.com/jP3Y9sY.gif', description: 'stewart double up', local_url: 'gifs/48.gif' },
-{ id: 49, url: 'http://i.imgur.com/iXfvvAZ.gif', description: 'devito flip', local_url: 'gifs/49.gif' },
-{ id: 50, url: 'http://i.imgur.com/Wdn9vdI.gif', description: 'child stumbles then surprise flips with conviction', local_url: 'gifs/50.gif' },
-{ id: 51, url: 'http://i.imgur.com/czy4iAA.gif', description: 'galifianakis middle finger', local_url: 'gifs/51.gif' },
-{ id: 52, url: 'http://i.imgur.com/qqvASSz.gif', description: 'spidey', local_url: 'gifs/52.gif' },
-{ id: 53, url: 'http://i.imgur.com/8IYFCj8.gif', description: 'felicia day u can go fuck urself', local_url: 'gifs/53.gif' },
-{ id: 54, url: 'http://i.imgur.com/LA1ARzg.gif', description: 'batman double flipper', local_url: 'gifs/54.gif' },
-{ id: 55, url: 'http://i.imgur.com/JRaxAKI.gif', description: 'freeman camera rush', local_url: 'gifs/55.gif' },
-{ id: 56, url: 'http://i.imgur.com/yanDuG4.gif', description: 'stiller finger', local_url: 'gifs/56.gif' },
-{ id: 57, url: 'http://i.imgur.com/0bVma53.gif', description: 'team up 2 say fuck you!', local_url: 'gifs/57.gif' },
-{ id: 58, url: 'http://i.imgur.com/rHrvoqG.gif', description: 'macgruber flip', local_url: 'gifs/58.gif' },
-{ id: 59, url: 'http://i.imgur.com/wxa6Qnq.gif', description: 'brain pls', local_url: 'gifs/59.gif' },
-{ id: 60, url: 'http://i.imgur.com/OPwcQkl.gif', description: 'asylum get fucked', local_url: 'gifs/60.gif' },
-{ id: 61, url: 'http://i.imgur.com/y8WwZHm.gif', description: 'burgundy fuck yourself', local_url: 'gifs/61.gif' },
-{ id: 62, url: 'http://i.imgur.com/hRSi2bN.gif', description: 'ja\'mie fuck public school bitches', local_url: 'gifs/62.gif' },
-{ id: 63, url: 'http://i.imgur.com/hcqWEOh.gif', description: 'colbert u can fuck yourself', local_url: 'gifs/63.gif' },
-{ id: 64, url: 'http://i.imgur.com/jdzkhwU.gif', description: '21st century fuck urself', local_url: 'gifs/64.gif' },
-{ id: 65, url: 'http://i.imgur.com/j9clEbk.gif', description: 'granny flips the bird', local_url: 'gifs/65.gif' },
-{ id: 66, url: 'http://i.imgur.com/FNalJLH.gif', description: 'bush back2back', local_url: 'gifs/66.gif' },
-{ id: 67, url: 'http://i.imgur.com/nHXgxtF.gif', description: 'doubtfire fuck u', local_url: 'gifs/67.gif' },
-{ id: 68, url: 'http://i.imgur.com/gf6Ce3S.gif', description: 'elsa fuck off', local_url: 'gifs/68.gif' },
-{ id: 69, url: 'http://i.imgur.com/Lu7SMVP.gif', description: 'kathy double bird', local_url: 'gifs/69.gif' },
-{ id: 70, url: 'http://i.imgur.com/pGY4fWA.gif', description: 'surprise bird', local_url: 'gifs/70.gif' },
-{ id: 71, url: 'http://i.imgur.com/RdMgi2M.gif', description: 'farley mechanical flip', local_url: 'gifs/71.gif' },
-{ id: 72, url: 'http://i.imgur.com/GK5sFYA.gif', description: 'buster has an accident', local_url: 'gifs/72.gif' },
-{ id: 73, url: 'http://i.imgur.com/XwcWiw6.gif', description: 'disney channel wand id middle finger', local_url: 'gifs/73.gif' },
-{ id: 74, url: 'http://i.imgur.com/iAiD12O.gif', description: 'radcliffe paints', local_url: 'gifs/74.gif' },
-{ id: 75, url: 'http://i.imgur.com/ZRxMPzy.gif', description: 'flight of the conchords rare triple bird', local_url: 'gifs/75.gif' },
-{ id: 76, url: 'http://i.imgur.com/gFiTl4N.gif', description: 'fuk u', local_url: 'gifs/76.gif' },
-{ id: 77, url: 'http://i.imgur.com/bMAaXYx.gif', description: 'welcome to the dollhouse fuck you', local_url: 'gifs/77.gif' },
-{ id: 78, url: 'http://i.imgur.com/Ojumk4x.gif', description: 'workaholics fuck u dude', local_url: 'gifs/78.gif' },
-{ id: 79, url: 'http://i.imgur.com/0EAEaRT.gif', description: 'adele double bird', local_url: 'gifs/79.gif' },
-{ id: 80, url: 'http://i.imgur.com/tyOshi6.gif', description: 'debra fuck you', local_url: 'gifs/80.gif' },
-{ id: 81, url: 'http://i.imgur.com/osO4ntp.gif', description: 'littlefinger fuck yourself', local_url: 'gifs/81.gif' },
-{ id: 82, url: 'http://i.imgur.com/IyAt21V.gif', description: 'shrek double bird', local_url: 'gifs/82.gif' },
-{ id: 83, url: 'http://i.imgur.com/wPWUxha.gif', description: 'kendrick flippin', local_url: 'gifs/83.gif' },
-{ id: 84, url: 'http://i.imgur.com/RHQfk9l.gif', description: 'tf2 double', local_url: 'gifs/84.gif' },
-{ id: 85, url: 'http://i.imgur.com/3taMGPY.gif', description: 'ringwald breakfast club flip', local_url: 'gifs/85.gif' },
-{ id: 86, url: 'http://i.imgur.com/5Y4HWeU.gif', description: 'lady gaga slight flip', local_url: 'gifs/86.gif' },
-{ id: 87, url: 'http://i.imgur.com/Nw30okY.gif', description: 'asap double', local_url: 'gifs/87.gif' },
-{ id: 88, url: 'http://i.imgur.com/6UWsQmz.gif', description: 'this guy looks like ray romano', local_url: 'gifs/88.gif' },
-{ id: 89, url: 'http://i.imgur.com/Up62vt4.gif', description: 'kunis fuk u', local_url: 'gifs/89.gif' },
-{ id: 90, url: 'http://i.imgur.com/T0vpgrv.gif', description: 'matt smith flipping the bird', local_url: 'gifs/90.gif' },
-{ id: 91, url: 'http://i.imgur.com/2KUfKCJ.gif', description: 'wild toe flip 10/10', local_url: 'gifs/91.gif' },
-{ id: 92, url: 'http://i.imgur.com/7Kqel9V.gif', description: 'bring it on middle', local_url: 'gifs/92.gif' },
-{ id: 93, url: 'http://i.imgur.com/4Hg038N.gif', description: 'the icon of a lo-fi song on soundcloud', local_url: 'gifs/93.gif' },
-{ id: 94, url: 'http://i.imgur.com/kwqgP7K.gif', description: 'cursed werewolf middle finger', local_url: 'gifs/94.gif' },
-{ id: 95, url: 'http://i.imgur.com/AHkgOsq.gif', description: 'pratt wind up bird', local_url: 'gifs/95.gif' },
-{ id: 96, url: 'http://i.imgur.com/0RRdVyC.gif', description: 'attack on titan or some shit?', local_url: 'gifs/96.gif' },
-{ id: 97, url: 'http://i.imgur.com/1F7JhaI.gif', description: 'mcavoy middle finger', local_url: 'gifs/97.gif' },
-{ id: 98, url: 'http://i.imgur.com/eNyIuiK.gif', description: 'conchords flippin', local_url: 'gifs/98.gif' },
-{ id: 99, url: 'http://i.imgur.com/P4C0vQV.gif', description: 'rebel found a fuck', local_url: 'gifs/99.gif' },
-{ id: 100, url: 'http://i.imgur.com/z1Gm6Ui.gif', description: 'hand flippin', local_url: 'gifs/100.gif' },
-{ id: 101, url: 'http://i.imgur.com/ZpZADCK.gif', description: 'rub it in', local_url: 'gifs/101.gif' },
-{ id: 102, url: 'http://i.imgur.com/Cu73ifj.gif', description: 'fuk everyone', local_url: 'gifs/102.gif' },
-{ id: 103, url: 'http://i.imgur.com/aqzNUJ5.gif', description: 'baby\'s first flip', local_url: 'gifs/103.gif' },
-{ id: 104, url: 'http://i.imgur.com/M6BZlpj.gif', description: 'donald glover (god) out of fucks', local_url: 'gifs/104.gif' },
-{ id: 105, url: 'http://i.imgur.com/tRKM2x2.gif', description: 'shaun get fucked', local_url: 'gifs/105.gif' },
-{ id: 106, url: 'http://i.imgur.com/X106sQT.gif', description: 'tremors fuck u haha', local_url: 'gifs/106.gif' },
-{ id: 107, url: 'http://i.imgur.com/AWIJKXR.gif', description: 'entourage or some shit?', local_url: 'gifs/107.gif' },
+        { id: 1, url: 'https://i.imgur.com/rGVUFGh.gif', description: 'disney go fuck yourself', local_url: 'gifs/1.gif' },
+{ id: 2, url: 'https://i.imgur.com/cBn1gZB.gif', description: 'crasy arm man go fuck yourself', local_url: 'gifs/2.gif' },
+{ id: 3, url: 'https://i.imgur.com/oBC7bLr.gif', description: 'gamecube fuck yourself', local_url: 'gifs/3.gif' },
+{ id: 4, url: 'https://i.imgur.com/L7Hkee6.gif', description: 'irredeemable fuckwit', local_url: 'gifs/4.gif' },
+{ id: 5, url: 'https://i.imgur.com/ZdGQWTH.gif', description: 'almost gave a fuck', local_url: 'gifs/5.gif' },
+{ id: 6, url: 'https://i.imgur.com/JOmfUor.gif', description: 'seal almost gave a fuck', local_url: 'gifs/6.gif' },
+{ id: 7, url: 'https://i.imgur.com/vRMR4pG.gif', description: 'middle finger greeting card', local_url: 'gifs/7.gif' },
+{ id: 8, url: 'https://i.imgur.com/SvykPoC.gif', description: 'middle finger thru the face', local_url: 'gifs/8.gif' },
+{ id: 9, url: 'https://i.imgur.com/G8KWYcZ.gif', description: 'scool bus bird', local_url: 'gifs/9.gif' },
+{ id: 10, url: 'https://i.imgur.com/0IRT9E2.gif', description: 'mr bean flippin it', local_url: 'gifs/10.gif' },
+{ id: 11, url: 'https://i.imgur.com/7utOqMN.gif', description: 'homer no fucks', local_url: 'gifs/11.gif' },
+{ id: 12, url: 'https://i.imgur.com/H5gTBvE.gif', description: 'aquaman fuck you', local_url: 'gifs/12.gif' },
+{ id: 13, url: 'https://i.imgur.com/mgVwGTD.gif', description: 'fuck you!', local_url: 'gifs/13.gif' },
+{ id: 14, url: 'https://i.imgur.com/TSHU3fE.gif', description: 'infinite birds', local_url: 'gifs/14.gif' },
+{ id: 15, url: 'https://i.imgur.com/Vbd00Ry.gif', description: 'disney go fuck yourself with a cactus', local_url: 'gifs/15.gif' },
+{ id: 16, url: 'https://i.imgur.com/oo7gwZJ.gif', description: 'departed maybe go fuck yourself', local_url: 'gifs/16.gif' },
+{ id: 17, url: 'https://i.imgur.com/7OEpoxD.gif', description: 'ninja flip', local_url: 'gifs/17.gif' },
+{ id: 18, url: 'https://i.imgur.com/IS8g6YD.gif', description: 'dinklage fuck u', local_url: 'gifs/18.gif' },
+{ id: 19, url: 'https://i.imgur.com/YyDq4OX.gif', description: 'mr rogers flippin', local_url: 'gifs/19.gif' },
+{ id: 20, url: 'https://i.imgur.com/i2Wou.jpg', description: 'colin mochrie middle finger', local_url: 'gifs/20.gif' },
+{ id: 21, url: 'https://i.imgur.com/ElURxUe.jpg', description: 'misfits fuck u', local_url: 'gifs/21.gif' },
+{ id: 22, url: 'https://i.imgur.com/2I0afpV.jpg', description: 'fingered in a wheelchair :(', local_url: 'gifs/22.gif' },
+{ id: 23, url: 'https://i.imgur.com/8P72l5F.jpg', description: 'dobby (rip) poof fuck you', local_url: 'gifs/23.gif' },
+{ id: 24, url: 'https://i.imgur.com/z9RQ3Ik.gif', description: 'sneaky dinner kid middle finger', local_url: 'gifs/24.gif' },
+{ id: 25, url: 'https://i.imgur.com/YqmYoka.gif', description: 'grannies flippin that bird', local_url: 'gifs/25.gif' },
+{ id: 26, url: 'https://i.imgur.com/c4CZuoC.gif', description: 'queen double bird', local_url: 'gifs/26.gif' },
+{ id: 27, url: 'https://i.imgur.com/NertoPx.gif', description: 'surprise quad flip', local_url: 'gifs/27.gif' },
+{ id: 28, url: 'https://i.imgur.com/27yYLyv.gif', description: 'that turtle franklin fuck you', local_url: 'gifs/28.gif' },
+{ id: 29, url: 'https://i.imgur.com/2UMXDvF.gif', description: 'woody fuck u', local_url: 'gifs/29.gif' },
+{ id: 30, url: 'https://i.imgur.com/GR1pElY.gif', description: 'scrolling go fuck yourself', local_url: 'gifs/30.gif' },
+{ id: 31, url: 'https://i.imgur.com/Vk9HYNz.gif', description: 'bouncy fuck you', local_url: 'gifs/31.gif' },
+{ id: 32, url: 'https://i.imgur.com/GCTedks.gif', description: 'dunst double bird', local_url: 'gifs/32.gif' },
+{ id: 33, url: 'https://i.imgur.com/vKS6Gac.gif', description: 'ryan stiles finds a fuck', local_url: 'gifs/33.gif' },
+{ id: 34, url: 'https://i.imgur.com/a5zSwVa.gif', description: 'jack bird', local_url: 'gifs/34.gif' },
+{ id: 35, url: 'https://i.imgur.com/zOcyC0u.jpg', description: 'powers pumpin bird', local_url: 'gifs/35.gif' },
+{ id: 36, url: 'https://i.imgur.com/Yv9NV.gif', description: 'boba fett wind up bird', local_url: 'gifs/36.gif' },
+{ id: 37, url: 'https://i.imgur.com/fMth417.gif', description: 'chevy finger', local_url: 'gifs/37.gif' },
+{ id: 38, url: 'https://i.imgur.com/Jb6n1Ua.gif', description: 'queen quad flip', local_url: 'gifs/38.gif' },
+{ id: 39, url: 'https://i.imgur.com/GBdLcr3.gif', description: 'not quite hollywod crazy fingers?', local_url: 'gifs/39.gif' },
+{ id: 40, url: 'https://i.imgur.com/Vwrp0J4.gif', description: 'amy poehler double finger', local_url: 'gifs/40.gif' },
+{ id: 41, url: 'https://i.imgur.com/20Cl6r9.gif', description: 'em 8 mile no fucks', local_url: 'gifs/41.gif' },
+{ id: 42, url: 'https://i.imgur.com/QT2k4Ed.gif', description: 'kristin bell ft. middle finger', local_url: 'gifs/42.gif' },
+{ id: 43, url: 'https://i.imgur.com/NWrIhea.gif', description: 'david brent finger', local_url: 'gifs/43.gif' },
+{ id: 44, url: 'https://i.imgur.com/VKx9XE7.gif', description: 'sudeikis show', local_url: 'gifs/44.gif' },
+{ id: 45, url: 'https://i.imgur.com/Qt7Qk0s.gif', description: 'gillian jacobs up urs', local_url: 'gifs/45.gif' },
+{ id: 46, url: 'https://i.imgur.com/78LM3vD.gif', description: 'girl car window flip', local_url: 'gifs/46.gif' },
+{ id: 47, url: 'https://i.imgur.com/7EQS5Og.gif', description: 'walter white bird', local_url: 'gifs/47.gif' },
+{ id: 48, url: 'https://i.imgur.com/jP3Y9sY.gif', description: 'stewart double up', local_url: 'gifs/48.gif' },
+{ id: 49, url: 'https://i.imgur.com/iXfvvAZ.gif', description: 'devito flip', local_url: 'gifs/49.gif' },
+{ id: 50, url: 'https://i.imgur.com/Wdn9vdI.gif', description: 'child stumbles then surprise flips with conviction', local_url: 'gifs/50.gif' },
+{ id: 51, url: 'https://i.imgur.com/czy4iAA.gif', description: 'galifianakis middle finger', local_url: 'gifs/51.gif' },
+{ id: 52, url: 'https://i.imgur.com/qqvASSz.gif', description: 'spidey', local_url: 'gifs/52.gif' },
+{ id: 53, url: 'https://i.imgur.com/8IYFCj8.gif', description: 'felicia day u can go fuck urself', local_url: 'gifs/53.gif' },
+{ id: 54, url: 'https://i.imgur.com/LA1ARzg.gif', description: 'batman double flipper', local_url: 'gifs/54.gif' },
+{ id: 55, url: 'https://i.imgur.com/JRaxAKI.gif', description: 'freeman camera rush', local_url: 'gifs/55.gif' },
+{ id: 56, url: 'https://i.imgur.com/yanDuG4.gif', description: 'stiller finger', local_url: 'gifs/56.gif' },
+{ id: 57, url: 'https://i.imgur.com/0bVma53.gif', description: 'team up 2 say fuck you!', local_url: 'gifs/57.gif' },
+{ id: 58, url: 'https://i.imgur.com/rHrvoqG.gif', description: 'macgruber flip', local_url: 'gifs/58.gif' },
+{ id: 59, url: 'https://i.imgur.com/wxa6Qnq.gif', description: 'brain pls', local_url: 'gifs/59.gif' },
+{ id: 60, url: 'https://i.imgur.com/OPwcQkl.gif', description: 'asylum get fucked', local_url: 'gifs/60.gif' },
+{ id: 61, url: 'https://i.imgur.com/y8WwZHm.gif', description: 'burgundy fuck yourself', local_url: 'gifs/61.gif' },
+{ id: 62, url: 'https://i.imgur.com/hRSi2bN.gif', description: 'ja\'mie fuck public school bitches', local_url: 'gifs/62.gif' },
+{ id: 63, url: 'https://i.imgur.com/hcqWEOh.gif', description: 'colbert u can fuck yourself', local_url: 'gifs/63.gif' },
+{ id: 64, url: 'https://i.imgur.com/jdzkhwU.gif', description: '21st century fuck urself', local_url: 'gifs/64.gif' },
+{ id: 65, url: 'https://i.imgur.com/j9clEbk.gif', description: 'granny flips the bird', local_url: 'gifs/65.gif' },
+{ id: 66, url: 'https://i.imgur.com/FNalJLH.gif', description: 'bush back2back', local_url: 'gifs/66.gif' },
+{ id: 67, url: 'https://i.imgur.com/nHXgxtF.gif', description: 'doubtfire fuck u', local_url: 'gifs/67.gif' },
+{ id: 68, url: 'https://i.imgur.com/gf6Ce3S.gif', description: 'elsa fuck off', local_url: 'gifs/68.gif' },
+{ id: 69, url: 'https://i.imgur.com/Lu7SMVP.gif', description: 'kathy double bird', local_url: 'gifs/69.gif' },
+{ id: 70, url: 'https://i.imgur.com/pGY4fWA.gif', description: 'surprise bird', local_url: 'gifs/70.gif' },
+{ id: 71, url: 'https://i.imgur.com/RdMgi2M.gif', description: 'farley mechanical flip', local_url: 'gifs/71.gif' },
+{ id: 72, url: 'https://i.imgur.com/GK5sFYA.gif', description: 'buster has an accident', local_url: 'gifs/72.gif' },
+{ id: 73, url: 'https://i.imgur.com/XwcWiw6.gif', description: 'disney channel wand id middle finger', local_url: 'gifs/73.gif' },
+{ id: 74, url: 'https://i.imgur.com/iAiD12O.gif', description: 'radcliffe paints', local_url: 'gifs/74.gif' },
+{ id: 75, url: 'https://i.imgur.com/ZRxMPzy.gif', description: 'flight of the conchords rare triple bird', local_url: 'gifs/75.gif' },
+{ id: 76, url: 'https://i.imgur.com/gFiTl4N.gif', description: 'fuk u', local_url: 'gifs/76.gif' },
+{ id: 77, url: 'https://i.imgur.com/bMAaXYx.gif', description: 'welcome to the dollhouse fuck you', local_url: 'gifs/77.gif' },
+{ id: 78, url: 'https://i.imgur.com/Ojumk4x.gif', description: 'workaholics fuck u dude', local_url: 'gifs/78.gif' },
+{ id: 79, url: 'https://i.imgur.com/0EAEaRT.gif', description: 'adele double bird', local_url: 'gifs/79.gif' },
+{ id: 80, url: 'https://i.imgur.com/tyOshi6.gif', description: 'debra fuck you', local_url: 'gifs/80.gif' },
+{ id: 81, url: 'https://i.imgur.com/osO4ntp.gif', description: 'littlefinger fuck yourself', local_url: 'gifs/81.gif' },
+{ id: 82, url: 'https://i.imgur.com/IyAt21V.gif', description: 'shrek double bird', local_url: 'gifs/82.gif' },
+{ id: 83, url: 'https://i.imgur.com/wPWUxha.gif', description: 'kendrick flippin', local_url: 'gifs/83.gif' },
+{ id: 84, url: 'https://i.imgur.com/RHQfk9l.gif', description: 'tf2 double', local_url: 'gifs/84.gif' },
+{ id: 85, url: 'https://i.imgur.com/3taMGPY.gif', description: 'ringwald breakfast club flip', local_url: 'gifs/85.gif' },
+{ id: 86, url: 'https://i.imgur.com/5Y4HWeU.gif', description: 'lady gaga slight flip', local_url: 'gifs/86.gif' },
+{ id: 87, url: 'https://i.imgur.com/Nw30okY.gif', description: 'asap double', local_url: 'gifs/87.gif' },
+{ id: 88, url: 'https://i.imgur.com/6UWsQmz.gif', description: 'this guy looks like ray romano', local_url: 'gifs/88.gif' },
+{ id: 89, url: 'https://i.imgur.com/Up62vt4.gif', description: 'kunis fuk u', local_url: 'gifs/89.gif' },
+{ id: 90, url: 'https://i.imgur.com/T0vpgrv.gif', description: 'matt smith flipping the bird', local_url: 'gifs/90.gif' },
+{ id: 91, url: 'https://i.imgur.com/2KUfKCJ.gif', description: 'wild toe flip 10/10', local_url: 'gifs/91.gif' },
+{ id: 92, url: 'https://i.imgur.com/7Kqel9V.gif', description: 'bring it on middle', local_url: 'gifs/92.gif' },
+{ id: 93, url: 'https://i.imgur.com/4Hg038N.gif', description: 'the icon of a lo-fi song on soundcloud', local_url: 'gifs/93.gif' },
+{ id: 94, url: 'https://i.imgur.com/kwqgP7K.gif', description: 'cursed werewolf middle finger', local_url: 'gifs/94.gif' },
+{ id: 95, url: 'https://i.imgur.com/AHkgOsq.gif', description: 'pratt wind up bird', local_url: 'gifs/95.gif' },
+{ id: 96, url: 'https://i.imgur.com/0RRdVyC.gif', description: 'attack on titan or some shit?', local_url: 'gifs/96.gif' },
+{ id: 97, url: 'https://i.imgur.com/1F7JhaI.gif', description: 'mcavoy middle finger', local_url: 'gifs/97.gif' },
+{ id: 98, url: 'https://i.imgur.com/eNyIuiK.gif', description: 'conchords flippin', local_url: 'gifs/98.gif' },
+{ id: 99, url: 'https://i.imgur.com/P4C0vQV.gif', description: 'rebel found a fuck', local_url: 'gifs/99.gif' },
+{ id: 100, url: 'https://i.imgur.com/z1Gm6Ui.gif', description: 'hand flippin', local_url: 'gifs/100.gif' },
+{ id: 101, url: 'https://i.imgur.com/ZpZADCK.gif', description: 'rub it in', local_url: 'gifs/101.gif' },
+{ id: 102, url: 'https://i.imgur.com/Cu73ifj.gif', description: 'fuk everyone', local_url: 'gifs/102.gif' },
+{ id: 103, url: 'https://i.imgur.com/aqzNUJ5.gif', description: 'baby\'s first flip', local_url: 'gifs/103.gif' },
+{ id: 104, url: 'https://i.imgur.com/M6BZlpj.gif', description: 'donald glover (god) out of fucks', local_url: 'gifs/104.gif' },
+{ id: 105, url: 'https://i.imgur.com/tRKM2x2.gif', description: 'shaun get fucked', local_url: 'gifs/105.gif' },
+{ id: 106, url: 'https://i.imgur.com/X106sQT.gif', description: 'tremors fuck u haha', local_url: 'gifs/106.gif' },
+{ id: 107, url: 'https://i.imgur.com/AWIJKXR.gif', description: 'entourage or some shit?', local_url: 'gifs/107.gif' },
 { id: 108, url: 'https://i.imgur.com/dUlo3Vv.gif', description: 'dirty finger', local_url: 'gifs/108.gif' },
 { id: 109, url: 'https://i.imgur.com/t1a6PCV.gif', description: 'fry take my money finger', local_url: 'gifs/109.gif' },
 { id: 110, url: 'https://i.imgur.com/Q0pfLhD.gif', description: 'kid glocked and loaded', local_url: 'gifs/110.gif' },
@@ -747,11 +754,6 @@ new ClipboardJS('.btn_fav', {
           this.showFingerPopover()
         }
         // show the popover if it's their first fav
-        console.log("profile tutorial in favGif: "+fucks.profile_tutorial)
-        if(!fucks.profile_tutorial){
-          console.log("showing profile popover")
-          this.showProfilePopover()
-        }
         //hide popover
         // console.log("current gif")
         // console.log(fuck)
@@ -767,6 +769,11 @@ new ClipboardJS('.btn_fav', {
         }
         // save favs
         if(alreadyFav==false){
+          console.log("profile tutorial in favGif: "+fucks.profile_tutorial)
+          if(!fucks.profile_tutorial){
+            console.log("showing profile popover")
+            this.showProfilePopover()
+          }
           // console.log("saving fav")
           var testies='#'+button_id
           // console.log("new fav...adding to fav_gifs: "+fuck.description)
@@ -815,6 +822,17 @@ new ClipboardJS('.btn_fav', {
           localStorage.removeItem("fav_gifs");
           localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
           $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
+          console.log("favs gifs length "+fucks.fav_gifs.length)
+          if(fucks.fav_gifs.length==0){
+            $('#dropdownMenuButton').popover('hide')
+            $('#dropdownMenuButton').popover('disable')
+          }
+          else{
+            if(!fucks.profile_tutorial){
+                console.log("showing profile popover")
+                this.showProfilePopover()
+            }
+          }
         }
         Vue.nextTick(function (){
           if (button_id.includes("inFavFav") && fucks.fav_gifs.length!=0){
@@ -1393,14 +1411,13 @@ new ClipboardJS('.btn_fav', {
       var retrievedData = localStorage.getItem("eligible_gifs");
       var parsedInsults = JSON.parse(retrievedData);
       // fucks.eligible_gifs = parsedInsults
-      if(!localStorage.all_gifs_loaded){
-        fucks.current_eligible_gifs = parsedInsults
-        // console.log("current_eligible_gifs size: "+fucks.current_eligible_gifs.length)
-      }
-      else{
-        fucks.eligible_gifs = parsedInsults
-        // console.log("eligible_gifs size: "+fucks.eligible_gifs.length)
-      }
+      fucks.current_eligible_gifs = parsedInsults
+      // if(!localStorage.all_gifs_loaded){
+      //   fucks.current_eligible_gifs = parsedInsults
+      // }
+      // else{
+      //   fucks.current_eligible_gifs = parsedInsults
+      // }
     }
     if (localStorage.profile_tutorial) {
       $('#dropdownMenuButton').popover('hide')
@@ -1592,6 +1609,7 @@ new ClipboardJS('.btn_fav', {
     } else {
       fucks.count = parseInt(localStorage.clickcount);
     }
+
     if (!localStorage.profileName) {
       localStorage.profileName = '';
     } else {
