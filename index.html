@@ -4,22 +4,16 @@
 <!-- load libraries and frameworks -->
 <link v-if="fucks.current_middle_finger" rel="shortcut icon" type="image/png" :href="fucks.current_middle_finger" />
 <link v-else rel="shortcut icon" type="image/png" href="middle_fingers/sketch_black_128x128.png" />
-<!-- <script src="https://unpkg.com/vue"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.10/vue.js"></script>
-<!-- <script src="https://unpkg.com/vue@2.5.15/dist/vue.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue-progressive-image@2.4.4/dist/vue-progressive-image.min.js"></script> -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
 <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
 <meta name="theme-color" content="#000000">
-<!-- <link rel="shortcut icon" href="middle_fingers/sketch_black_128x128.png" type="image/x-icon" /> -->
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no,  user-scalable=0">
@@ -39,35 +33,8 @@
   <title>fucked</title>
 </head>
 <body>
-<!-- <div class="container" id="data"> -->
   <div class="h-100 w-100 col-lg-5 offset-lg-3" id="data">
-    <!-- <div class="dropdown show">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown link
-      </a>
-
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="newDropdown">
-        <button class="btn" data-clipboard-text="in dropdown sucker" id="newDropdownButton">
-        Copy to clipboard | <i class="far fa-copy" style="font-size:20px"></i>
-        </button>
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <button type="button" class="btn rons_button btn-lg btn-block" style="font-size: 25px;">close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-  <!-- centered container -->
-  <!-- <div class=""> -->
-    <!-- <div class="row"> -->
-      <!-- <div class="col"> -->
-        <!-- <div class="row"> -->
-          <!-- <div class="col"> -->
             <center>
-              <!-- Trigger -->
-              <!-- <hr style="padding:5; margin:5;"> -->
               <hr>
               <!-- profile dropdown button-->
               <div class="dropdown dropdown-pull-right show" id="profile_dropdown">
@@ -78,8 +45,6 @@
                   <div class="dropdown-menu dropdown-menu-right" style="width: 400px !important;" aria-labelledby="dropdownMenuButton">
                     <div class="col fav mostly-customized-scrollbar">
                       <br>
-                      <!-- <div class="form-row align-items-center"> -->
-                      <!-- <div class="col"> -->
                         <div class="row">
                           <div class="col-4">
                             <button type="button" id="submitGif" v-on:click="submitGif" class="rons_button btn" role="button" >submit gif</button>
@@ -93,19 +58,13 @@
                             </div>
                           </div>
                         </div>
-
-                        <!-- </div> -->
-                      <!-- </div> -->
                       <hr>
                       <center><h4>favs</h4><center>
                       <hr>
                       <div class="container fav_gifs" id="favs_loop">
-                        <!-- <div class="row"> -->
                           <div v-for="fav in fav_gifs" v-cloak>
                             <p>{{fav.description}}</p>
                             <img :src="fav.url" :id="fav" width=100% v-cloak>
-                            <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
-                            <!-- <input type="text" :value="fav.url" :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;"> -->
                             <span class="float-right" >
                               <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavDownload'" v-on:click="saveGif(fav.id+'inFavDownload', fav)" data-toggle="popover" data-placement="bottom" title="downloading..." :data-content="fav.description">
                                 <a :download="fav.description" :href="fav.local_url" title="ImageName">
@@ -116,13 +75,6 @@
                               <button class="btn btn-light" :data-clipboard-text="fav.url" role="button" :id="fav.id+'favCopy'" v-on:click="showFavGrowl(fav, fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
                               <i class="far fa-copy" style="font-size:20px"></i>
                               </button>
-                              <!-- <button class="btn_fav btn-light" role="button" :data-clipboard-text="fav.url" :id="fav.id+'favCopy'" v-on:click="newCopyUrl(fav.id+'favCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fav.url">
-                                  copy<i class="far fa-copy" style="font-size:20px"></i>
-                              </button> -->
-                              <!-- <p :id="fav.id+'favCopyText'" style="position: absolute;left: -9999px;">{{fav.url}}</p>
-                              <button type="button" role="button" class="btn btn-light" :id="fav.id+'favCopy'" v-on:click="copyUrl(fav.id+'favCopyText',fav.id+'favCopy')" data-toggle="popover"  data-placement="bottom" title="copied" :data-content="fav.url">
-                                <i class="far fa-copy" style="font-size:20px"></i>
-                              </button> -->
                               |
                               <button type="button" role="button" class="btn btn-light" :id="fav.id+'inFavFav'" v-on:click="favGif(fav,fav.id+'inFavFav')">
                                 <i class="fas fa-star" style="font-size:20px"></i>
@@ -132,7 +84,6 @@
                             <br>
                             <hr>
                           </div>
-                        <!-- </div> -->
                       </div>
                     </div>
                     <div class="container">
@@ -142,14 +93,8 @@
                         </div>
                       </div>
                     </div>
-                      <!-- </div> -->
                     </div>
-                  <!-- </div> -->
-                <!-- </div> -->
               </div>
-              <!-- <div class="container"> -->
-                <!-- <div class="container"> -->
-                <!-- here, adding the other fingers and shit -->
                 <h2>
                   <!-- middle finger select -->
                   <div class="row" style="padding:0; margin:0;">
@@ -157,30 +102,19 @@
                     <div class="col-3">
                       <div class="dropdown rons-menu">
                         <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                          <!-- lg down 125% -->
+                          <!-- desktop -->
                           <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="100%" class="d-none d-lg-block">
                           <img v-else src="middle_fingers/zombie_128x128.png" width="100%" class="d-none d-lg-block">
-
+                          <!-- mobile -->
                           <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%" class="d-lg-none">
                           <img v-else src="middle_fingers/zombie_128x128.png" width="150%" class="d-lg-none">
                         </button>
-                        <!-- <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                          <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
-                          <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
-                        </button> -->
                         <div class="rons-menu">
                           <div class="dropdown-menu">
                             <div v-for="finger in middle_fingers" v-cloak>
                               <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
                                 <img :src="finger.path+'.png'" width="75%">
                               </button>
-
-                            <!-- <button type="button" class="btn">
-                              <img src="middle_fingers/simple_black_128x128.png" width="50%">
-                            </button>
-                            <button type="button" class="btn">
-                              <img src="middle_fingers/zombie_128x128.png" width="50%">
-                            </button> -->
                           </div>
                         </div>
                       </div>
@@ -202,23 +136,12 @@
                         <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%" class="d-lg-none">
                         <img v-else src="middle_fingers/zombie_128x128.png" width="150%" class="d-lg-none">
                       </button>
-                      <!-- <button id="middle_finger_left" type="button" v-on:click="fingerClicked()" class="btn profile-button d-lg-none" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" data-toggle="popover" data-placement="bottom" data-content="click to change middle fingers">
-                        <img v-if="current_middle_finger" :src="current_middle_finger+'.png'" width="150%">
-                        <img v-else src="middle_fingers/zombie_128x128.png" width="150%">
-                      </button> -->
                       <div class="rons-menu">
                         <div class="dropdown-menu">
                           <div v-for="finger in middle_fingers" v-cloak>
                             <button v-if="finger.path!=current_middle_finger" type="button" class="btn profile-button" v-on:click="changeFinger(finger.id)">
                               <img :src="finger.path+'.png'" width="75%">
                             </button>
-
-                          <!-- <button type="button" class="btn">
-                            <img src="middle_fingers/simple_black_128x128.png" width="50%">
-                          </button>
-                          <button type="button" class="btn">
-                            <img src="middle_fingers/zombie_128x128.png" width="50%">
-                          </button> -->
                         </div>
                       </div>
                     </div>
@@ -229,18 +152,6 @@
                 <hr style="padding:0; margin:0;">
                 <center>total gifs: {{fucked_gifs.length}} | <span v-if="!all_gifs_loaded">loaded gifs: {{loaded_gifs.length}} |</span> your gifs: {{count}}</center>
                 <hr style="padding:0; margin:0;">
-              <!-- </div> -->
-              <!-- <hr> -->
-              <!-- <transition name="fade">
-              <div v-if="all_gifs_loaded" ></div>
-              <div v-else-if="loaded_gifs.length>35" class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">loading gifs...{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
-              </div>
-              <div v-else class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">{{loaded_gifs.length}}/{{fucked_gifs.length}}</div>
-              </div>
-              </transition> -->
-              <!-- <img src="http://i.imgur.com/YyDq4OX.gif" alt = "" :id="fuck" width=100%> -->
             </center>
             <!-- insults -->
             <div v-cloak>
@@ -259,9 +170,6 @@
                   <button class="btn btn-light" role="button" :data-clipboard-text="fuck.url" :id="fuck.id+'newCopy'" v-on:click="newCopyUrl(fuck.id+'newCopy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
                       <i class="far fa-copy" style="font-size:20px"></i>
                   </button>
-                  <!-- <button type="button" role="button" class="btn btn-light" :id="fuck.id+'copy'" v-on:click="copyUrl(fuck.id+'copyText',fuck.id+'copy')" data-toggle="popover" data-placement="bottom" title="copied" :data-content="fuck.url">
-                    <i class="far fa-copy" style="font-size:20px"></i>
-                  </button> -->
                   |
                   <button type="button" role="button" class="btn btn-light" :id="fuck.id+'fav'" v-on:click="favGif(fuck,fuck.id+'fav')" data-toggle="popover" data-placement="bottom" title="fav'd" :data-content="fuck.description">
                     <i class="far fa-star" style="font-size:20px"></i>
@@ -287,9 +195,6 @@
                 <button v-else-if="current_count>=loaded_gifs.length" type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back" disabled>&nbsp;<img :src="current_middle_finger+'.gif'" width="8%"/>loading...<img :src="current_middle_finger+'.gif'" width="8%"/></button>
                 <button v-else type="button" id="insultMePls" class="rons_button btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later, download or copy a url to share. everything will be saved when you come back">get fucked &nbsp;<img :src="current_middle_finger+'.png'" width="8%"/></button>
               </div>
-              <!-- <div class="col-8">
-              <button type="button" id="insultMePls" class="btn-dark btn-lg btn-block" @click="show = true" v-on:click="getRandomGif" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="click to get random gifs" data-content="star your favs for later,download or copy a url to share" disabled><img src="loading1.gif" width="10%"/></button>
-              </div> -->
               <!--
               *****************
               *****************
@@ -330,14 +235,6 @@
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="row" style="margin-bottom: 5%;">
-                          <div class="pretty p-switch p-fill">
-                            <input type="checkbox" id="clear_level" />
-                            <div class="state">
-                              <label>clicks</label>
-                            </div>
-                          </div>
-                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -348,10 +245,6 @@
                         <button type="button" class="btn rons_button btn-lg btn-block" v-on:click="clear_specific" id="clear_selected" style="font-size: 25px;" data-dismiss="modal" disabled>clear selected</button>
                       </div>
                       <div class="col" style="margin-bottom: 5%;">
-                        <!-- trying to add a popover to disabled clear buttons? -->
-                        <!-- <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
-                          <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
-                        </span> -->
                         <button v-if="!all_gifs_loaded" type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal" disabled>gifs loading...</button>
                         <button v-else type="button" class="btn btn-outline-warning btn-lg btn-block" v-on:click="clear" style="font-size: 25px;" data-dismiss="modal">clear all</button>
                       </div>
@@ -365,21 +258,13 @@
                 </div>
               </div><!-- end clear dropup -->
             </div><!-- end get fucked and clear buttons -->
-
           </div><!-- end main content -->
-          <!-- </div> -->
         </body>
 <!-- javascript -->
 <script>
-// import Vue from 'vue'
-// import VueProgressiveImage from 'vue-progressive-image'
-// Vue.use(VueProgressiveImage)
 //once doc is ready, check all favs in insult_list
 // ready boy
 $(document).ready(function() {
-//   new ClipboardJS('.btn', {
-//     container: document.getElementById('dropdown-menu')
-// });
 new ClipboardJS('.btn', {});
 new ClipboardJS('.btn_fav', {
     container: document.getElementById('favs_loop')
@@ -389,25 +274,6 @@ new ClipboardJS('.btn_fav', {
     var testies="#"+num
     $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
   }
-  // console.log("setting popover")
-  // if (!localStorage.profile_tutorial) {
-  //   fucks.showProfilePopover()
-  // }
-//   $("#dropdownMenuButton").popover({
-//         html : true,
-// }).data('bs.show.bs.popover').tip().attr('id', 'rons_popover');
-
-// $('#dropdownMenuButton').on('shown.bs.popover', function() {
-//     // parseInt removes "px"
-//     console.log('dropdown popover has shown: '+(currentTop + 100) + 'px')
-//     var currentTop = parseInt($(this).css('top'));
-//     var currentLeft = parseInt($(this).css('left'));
-//
-//     $(this).css({
-//         top: '45px',
-//         left: '-18px'
-//     });
-// });
   });
   // ------------------------
   // vue defs
@@ -623,13 +489,6 @@ new ClipboardJS('.btn_fav', {
         if(fucks.fav_gifs.length>0 && !fucks.profile_tutorial){
           this.showProfilePopover()
         }
-        //check if you won
-        // console.log((fucks.count+1))
-        // console.log((fucks.times_completed+1))
-        //generate random gif
-        // console.log("loaded gifs count: ")
-        // console.log(fucks.loaded_gifs.length)
-        // var fuck = fucks.fucked_gifs[Math.floor(Math.random() * fucks.fucked_gifs.length)]
 
         //handle weird loading multiple times shit
         if (fucks.eligible_gifs.length==0){
@@ -638,28 +497,9 @@ new ClipboardJS('.btn_fav', {
         }
         var randomIndex=Math.floor(Math.random() * fucks.eligible_gifs.length)
         var fuck = fucks.eligible_gifs[randomIndex]
-        // check if the gif you got is seen in the list as m
-        // this is broken HEREEE
-        // console.log("laksjd")
-        // console.log((fucks.times_completed+1))
-        // console.log(fucks.fucks_list.filter(item => item == fuck).length)
-        // if (fucks.fucks_list.filter(item => item == fuck).length==(fucks.times_completed+1)){
-        // console.log(fucks.fucked_gifs.length)
-        // console.log(fucks.loaded_gifs.length)
 
         //let them click if we haven't hit the max number of gifs
         if(fucks.count<fucks.fucked_gifs.length){
-          // console.log("not maxed yet")
-          //see it we've already seen it
-          // var seent_it=false
-          // for (i = 0; i < fucks.fucks_list.length; i++) {
-          //   if(fucks.fucks_list[i].url==fuck.url){
-          //     seent_it=true
-          //   }
-          // }
-          // if (seent_it){
-          //   this.getRandomGif()
-          // }
           //you win
           if ((fucks.count+1)/(fucks.times_completed+1)==fucks.fucked_gifs.length){
                     fucks.times_completed++
@@ -755,9 +595,6 @@ new ClipboardJS('.btn_fav', {
         }
         // show the popover if it's their first fav
         //hide popover
-        // console.log("current gif")
-        // console.log(fuck)
-        // var index=0
         var alreadyFav=false
         for (i = 0; i < fucks.fav_gifs.length; i++) {
           if (fuck.url==fucks.fav_gifs[i].url){
@@ -802,23 +639,13 @@ new ClipboardJS('.btn_fav', {
             }
           }
           var deleted_item= fucks.fav_gifs.splice(rons_index, 1);
-          // console.log("deleted item")
-          // console.log(deleted_item)
-          // console.log("------------------------")
-          // console.log(fucks.fav_gifs)
-          // $('#'+button_id).popover('hide');
+
           $('#'+button_id).popover('hide')
           $('#'+button_id).popover('disable')
-          // console.log("unfaving: "+fuck.description)
-          // console.log("button id: "+button_id)
-          // this.fucks.fav_gifs.splice(this.fucks.fav_gifs.indexOf(fuck), 1);
+
           //change star to filled star
 
-          // console.log("index: "+index)
-          // if(index==-1){
-          //   index=0
-          // }
-          // fucks.fav_gifs.splice(index);
+
           localStorage.removeItem("fav_gifs");
           localStorage.setItem("fav_gifs", JSON.stringify(fucks.fav_gifs));
           $(testies).html('<i class="far fa-star" style="font-size:20px"></i>')
@@ -862,14 +689,6 @@ new ClipboardJS('.btn_fav', {
         }
         var element='#'+text_id
         copyToClipboard(element)
-        // console.log("text_id in copy_url: "+text_id)
-        // var copyText = document.getElementById(text_id);
-        // copyText.select();
-        // var selObj = window.getSelection();
-        // console.log("window selected")
-        // console.log(selObj)
-        // document.execCommand("copy");
-        // console.log("Copied: " + copyText.value)
         var testies='#'+button_id
         // console.log(testies)
         var test='#insultMePls'
@@ -961,8 +780,6 @@ new ClipboardJS('.btn_fav', {
         })
       },
       changeFinger: function(new_id) {
-        console.log("in change finger: "+new_id)
-        console.log(fucks.middle_fingers[new_id-1])
         localStorage.removeItem("current_middle_finger");
         fucks.current_middle_finger=""
         fucks.current_middle_finger=fucks.middle_fingers[new_id-1].path
@@ -999,8 +816,6 @@ new ClipboardJS('.btn_fav', {
 
       },
       profileClicked: function() {
-        console.log("profile clicked...fav_gifs length: "+fucks.fav_gifs.length)
-        console.log("profile clicked...profile_tutorial: "+fucks.profile_tutorial)
         if(fucks.fav_gifs.length>=1 && !fucks.profile_tutorial){
           // console.log("profile clicked...profile_tutorial: "+fucks.profile_tutorial)
           // this.showProfilePopover()
@@ -1051,14 +866,12 @@ new ClipboardJS('.btn_fav', {
         // console.log("saved...ready for clicks")
       },
       reload_eligible_lists: function() {
-        console.log("in reload eligible lists")
         //look through fucked gifs
         for (var s=0; s < fucks.fucked_gifs.length; s++) {
           //see fucked_gifs[s] is already in our fucks_list
           var already_in_list=false
           for (b = 0; b < fucks.fav_gifs.length; b++) {
             if(fucks.fav_gifs[b].url==fuck.url){
-              console.log("already in our fucked gifs")
               already_in_list=true
             }
           }
@@ -1067,11 +880,6 @@ new ClipboardJS('.btn_fav', {
             fucks.eligible_gifs.push(fucks.fucked_gifs[s])
           }
         }
-        //wtf start here...why is it 214? and more? wtf
-        console.log("loaded: "+fucks.loaded_gifs.length+" : "+fucks.eligible_gifs.length)
-        // localStorage.removeItem("eligible_gifs");
-        // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.eligible_gifs));
-        // console.log("saved...ready for clicks")
       },
       saveFavorite: function(fav, where_from) {
         if (where_from == "favs") {
@@ -1171,7 +979,6 @@ new ClipboardJS('.btn_fav', {
       },
       showProfilePopover: function(){
         Vue.nextTick(function (){
-          console.log("showing popover...")
           // sleep(100);
           $('#dropdownMenuButton').popover('enable')
           $('#dropdownMenuButton').popover('show')
@@ -1179,7 +986,6 @@ new ClipboardJS('.btn_fav', {
       },
       setCurrentMiddleFinger: function(){
         var randomFinger=Math.floor(Math.random() * 2)
-        console.log("random current finger num: "+randomFinger)
         fucks.current_middle_finger=fucks.middle_fingers[randomFinger].path
         localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
       },
@@ -1332,35 +1138,13 @@ new ClipboardJS('.btn_fav', {
 }
   // profile closed without saving....don't worry we'll save anyways :)
   // also do not let the user close the dropdown without meaning too
-  // var wtfClicks=0
-  // var firstClick=0
   $('#profile_dropdown').on('hide.bs.dropdown', function() {
-    // console.log('closing...')
     fucks.saveProfile();
-    // wtfClicks=0
   });
-  // $('#dropdownMenuButton').on('click', function() {
-  //   if(firstClick!=0 && wtfClicks==0){
-  //     wtfClicks++
-  //   }
-  // });
-  // $('#profile_dropdown').on('click', function() {
-  //   if(wtfClicks==0){
-  //     wtfClicks++
-  //     firstClick++
-  //   }
-  //   else{
-  //     // return false;
-  //   }
-  //   console.log("clicked in profile")
-  //   console.log(wtfClicks)
-  // });
 
 
   $('#newDropdown').on('hide.bs.dropdown', function() {
     console.log('closing...newDropdown')
-    // fucks.saveProfile();
-    // wtfClicks=0
   });
   $('#newDropdownButton').on('click', function() {
     console.log("newDropdownHit")
@@ -1368,11 +1152,6 @@ new ClipboardJS('.btn_fav', {
   $('#newDropdown').on('click', function() {
     console.log("clicked")
   });
-//   $('#profile_dropdown').on({
-//     'shown.bs.dropdown': function() { this.closable = false; },
-//     "click":             function() { this.closable = false; },
-//     "hide.bs.dropdown":  function() { this.closable = true;; }
-// });
   $(function() {
     $('[data-toggle="popover"]').popover()
   })
@@ -1386,38 +1165,15 @@ new ClipboardJS('.btn_fav', {
   // ------------------------
   window.onload = function() {
     fucks.current_count=0
-    // var i=0
-    // while (i < fucks.fucked_gifs.length) {
-    //   // console.log("The number is " + i);
-    //   var my_image = new Image();
-    //   console.log("before loading... "+i)
-    //   my_image.src = fucks.fucked_gifs[i].url;
-    //   var caption=fucks.fucked_gifs[i].description
-    //   fucks.loaded_gifs.push(fucks.fucked_gifs[i])
-    //   my_image.onload = function () {
-    //     console.log("image is loaded: "+my_image.src);
-    //     i++;
-    //   }
-    // }
     //first load fucked_gifs full of shit for us to use
     var loadAll=false
     if (!localStorage.eligible_gifs) {
       localStorage.eligible_gifs = [];
       loadAll=true
-      // localStorage.setItem("eligible_gifs", JSON.stringify(fucks.all_gifs));
-      // fucks.fucked_gifs=fucks.all_gifs
-      // console.log("no eligible_gifs...setting")
     } else {
       var retrievedData = localStorage.getItem("eligible_gifs");
       var parsedInsults = JSON.parse(retrievedData);
-      // fucks.eligible_gifs = parsedInsults
       fucks.current_eligible_gifs = parsedInsults
-      // if(!localStorage.all_gifs_loaded){
-      //   fucks.current_eligible_gifs = parsedInsults
-      // }
-      // else{
-      //   fucks.current_eligible_gifs = parsedInsults
-      // }
     }
     if (localStorage.profile_tutorial) {
       $('#dropdownMenuButton').popover('hide')
@@ -1431,10 +1187,6 @@ new ClipboardJS('.btn_fav', {
       fucks.finger_tutorial=true
     }
     if (!localStorage.tutorial) {
-      // console.log("noTutorial")
-      // fucks.clear()
-      // $('#insultMePls').popover('hide')
-      // fucks.showProfilePopover()
       $('#insultMePls').popover('show')
     } else {
       $('#insultMePls').popover('hide')
@@ -1442,41 +1194,23 @@ new ClipboardJS('.btn_fav', {
     }
     if(!localStorage.current_middle_finger){
       fucks.setCurrentMiddleFinger()
-      // var randomFinger=Math.floor(Math.random() * 2)
-      // console.log("random current finger num: "+randomFinger)
-      // console.log("middle fingers 0")
-      // console.log(fucks.middle_fingers[0])
-      // fucks.current_middle_finger=fucks.middle_fingers[0].path
-      // console.log("current middle finger: ")
-      // console.log(fucks.current_middle_finger)
-      // localStorage.setItem("current_middle_finger", JSON.stringify(fucks.current_middle_finger));
-      // console.log("current_eligible_gifs size: "+fucks.current_eligible_gifs.length)
     }
     else{
       var retrievedData = localStorage.getItem("current_middle_finger");
       var parsedInsults = JSON.parse(retrievedData);
       fucks.current_middle_finger = parsedInsults
-      console.log("current middle finger: ")
-      console.log(fucks.current_middle_finger)
-      // console.log("eligible_gifs size: "+fucks.eligible_gifs.length)
     }
     // cache these babies
     function is_cached(src) {
       var image = new Image();
       image.src = src;
-      // console.log(image.complete)
       return image.complete;
     }
-    // console.log('fucks gif length')
-    // console.log(fucks.fucked_gifs.length)
 
     var loadedGifCount=0
     // load gifs
     function load_gifs(num)
     {
-      // if(loadedGifCount>=1 && !localStorage.profile_tutorial){
-      //   fucks.showProfilePopover()
-      // }
       var list_length=0
       if (loadAll){
         list_length=fucks.fucked_gifs.length
@@ -1558,14 +1292,6 @@ new ClipboardJS('.btn_fav', {
           //move popover
         }
         localStorage.setItem("all_gifs_loaded", true);
-        // if (!localStorage.profile_tutorial) {
-        //   console.log("setting popover")
-        //   fucks.showProfilePopover()
-        // }
-        // if (!localStorage.profile_tutorial) {
-        //   fucks.showProfilePopover()
-        // }
-        //move popover when gifs finish loading
         if (!localStorage.tutorial) {
         $('#insultMePls').popover('hide')
         $('#insultMePls').popover('dispose')
@@ -1573,31 +1299,9 @@ new ClipboardJS('.btn_fav', {
         }
         fucks.all_gifs_loaded=true
       }
-      // if(fucks.loaded_gifs.length>0 && fucks.fucked_gifs.length>0){
-      //   document.getElementById("progressBar").style.width = fucks.loaded_gifs.length / fucks.fucked_gifs.length * 100 + "%";
-      // }
-      // console.log("loaded gifs count: "+fucks.loaded_gifs.length)
     }
-    // console.log("fucked gifs count: "+fucks.fucked_gifs.length)
-
-    // if (!localStorage.all_gifs_loaded) {
       load_gifs(fucks.fucked_gifs[loadedGifCount]);
-    // }
-    // else{
-    //   fucks.all_gifs_loaded=true
-    // }
-// document.write(result);
-    // load images so you can spam
-    // for (i = 0; i < fucks.fucked_gifs.length; i++) {
-    //   var my_image = new Image();
-    //   console.log("before loading... "+i)
-    //   my_image.src = fucks.fucked_gifs[i].url;
-    //   var caption=fucks.fucked_gifs[i].description
-    //   fucks.loaded_gifs.push(fucks.fucked_gifs[i])
-    //   my_image.onload = function () {
-    //     console.log("image is loaded: "+my_image.src);
-    //   }
-    // }
+
     if (!localStorage.times_completed) {
       localStorage.times_completed=0
     }
@@ -1642,11 +1346,6 @@ new ClipboardJS('.btn_fav', {
       var retrievedData = localStorage.getItem("fav_gifs");
       var parsedFavs = JSON.parse(retrievedData);
       fucks.fav_gifs = parsedFavs
-      // for (i = 0; i < fucks.fav_gifs.length; i++) {
-      //   var testies="#"+fucks.fav_gifs[i].id+"3"
-      //   console.log("testies: "+testies)
-      //   $(testies).html('<i class="fas fa-star"></i>')
-      // }
     }
     var found_progress = false
     for (i = 0; i < fucks.progress.length; i++) {
@@ -1659,7 +1358,6 @@ new ClipboardJS('.btn_fav', {
     if (found_progress == false) {
       fucks.next_progress_count = fucks.progress[fucks.progress.length - 1].int
     }
-    // document.getElementById("progressBar").style.width = fucks.count / fucks.next_progress_count * 100 + "%";
     if (!localStorage.insult_string) {
       localStorage.insult_string = "";
     } else {
@@ -1671,9 +1369,7 @@ new ClipboardJS('.btn_fav', {
       for (i = 0; i < fucks.fav_gifs.length; i++) {
         var num=fucks.fav_gifs[i].id+"fav"
         var testies="#"+num
-        // console.log("testies: "+testies)
         $(testies).html('<i class="fas fa-star" style="font-size:20px"></i>')
-        //move popover
       }
     })
     if(fucks.count>=9 && !fucks.finger_tutorial){
@@ -1739,15 +1435,7 @@ text-rendering: optimizeLegibility;
   }
   .popover {
     text-align: center;
-    /* top: 45px !important;
-    left: -18px !important; */
-    /* left: 379px !important; */
   }
-  /* .popover.dropdownMenuButton {{
-    text-align: center;
-    top: 45px !important;
-    left: -18px !important;
-  } */
   .rons_modal {
     min-width: 60%;
     width: 60%;
@@ -1763,12 +1451,6 @@ text-rendering: optimizeLegibility;
     margin: 0;
     padding: 0;
   }
-  /* .rons_finger:active {outline:0;} */
-  /* .rons_button:active {
-    background: #f6f4f1;
-    color:#000000;
-  } */
-  /* .rons_button:focus {outline:0;} */
 
   .profile_button:focus {outline:0;}
 
@@ -1787,20 +1469,13 @@ text-rendering: optimizeLegibility;
     min-height: 67%;
     min-width: 100%;
     width: 100%;
-    /* height: 60%; */
     overflow-y: scroll;
-    /* overflow:hidden; */
-    /* font-size: 22px; */
   }
   .fav_gifs {
     max-height: 65%;
     min-height: 65%;
     min-width: 100%;
     width: 100%;
-    /* height: 60%; */
-    /* overflow-y: scroll; */
-    /* overflow:hidden; */
-    /* font-size: 22px; */
   }
 
   .clear {
@@ -1809,13 +1484,7 @@ text-rendering: optimizeLegibility;
 
   .fav {
     height: 500px; !important
-    /* min-height: 70%; */
-    /* min-width: 100%;
-    width: 100%; */
-    /* height: 60%; */
     overflow-y: scroll;
-    /* overflow:hidden; */
-    /* font-size: 22px; */
   }
 
   .profile-button {
